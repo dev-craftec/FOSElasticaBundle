@@ -21,7 +21,7 @@ class PostElasticaRequestEvent
 
     public function __construct(
         RequestInterface $request,
-        Response $response
+        Response $response,
     ) {
         $this->request = $request;
         $this->response = $response;

@@ -17,11 +17,9 @@ namespace FOS\ElasticaBundle\Configuration;
 class ConfigManager implements ManagerInterface
 {
     /**
-     * @var IndexConfig[]
-     *
-     * @phpstan-var array<string, IndexConfigInterface>
+     * @var array<string, IndexConfigInterface>
      */
-    private $indexes = [];
+    private array $indexes = [];
 
     /**
      * @param Source\SourceInterface[] $sources

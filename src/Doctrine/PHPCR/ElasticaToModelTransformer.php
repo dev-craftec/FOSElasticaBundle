@@ -28,12 +28,12 @@ class ElasticaToModelTransformer extends AbstractElasticaToModelTransformer
      *
      * @return array of objects or arrays
      */
-    protected function findByIdentifiers(array $identifierValues, $hydrate)
+    protected function findByIdentifiers(array $identifierValues, bool $hydrate): array
     {
-        // @phpstan-ignore-next-line The call is \Doctrine\ODM\PHPCR\DocumentRepository::findMany()
         return $this->registry
             ->getManager()
             ->getRepository($this->objectClass)
+            // @phpstan-ignore method.notFound (The call is \Doctrine\ODM\PHPCR\DocumentRepository::findMany())
             ->findMany($identifierValues)
             ->toArray()
         ;

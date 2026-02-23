@@ -65,7 +65,7 @@ class ResetterTest extends TestCase
             'name' => $indexName,
             'config' => [],
             'mapping' => [],
-            'model' => [],
+            'model' => null,
         ]);
         $mapping = ['map' => 'ping'];
         $index = $this->mockIndex($indexName, $indexConfig, $mapping);
@@ -94,7 +94,7 @@ class ResetterTest extends TestCase
             'name' => 'index1',
             'config' => [],
             'mapping' => [],
-            'model' => [],
+            'model' => null,
         ]);
         $mapping = ['map' => 'ping'];
         $index = $this->mockIndex('index1', $indexConfig, $mapping);
@@ -120,7 +120,7 @@ class ResetterTest extends TestCase
             'use_alias' => true,
             'config' => [],
             'mapping' => [],
-            'model' => [],
+            'model' => null,
         ]);
         $mapping = ['map' => 'ping'];
         $index = $this->mockIndex('index1', $indexConfig, $mapping);
@@ -164,7 +164,7 @@ class ResetterTest extends TestCase
             'name' => 'index',
             'config' => [],
             'mapping' => [],
-            'model' => [],
+            'model' => null,
         ]));
 
         $this->indexManager->expects($this->never())
@@ -184,7 +184,7 @@ class ResetterTest extends TestCase
             'use_alias' => true,
             'config' => [],
             'mapping' => [],
-            'model' => [],
+            'model' => null,
         ]);
         $index = $this->mockIndex('index', $indexConfig);
 

@@ -28,34 +28,27 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class ModelToElasticaAutoTransformer implements ModelToElasticaTransformerInterface
 {
-    /**
-     * @var ?EventDispatcherInterface
-     */
-    protected $dispatcher;
+    protected ?EventDispatcherInterface $dispatcher = null;
 
     /**
      * Optional parameters.
      *
-     * @var array
-     *
-     * @phpstan-var TOptions
+     * @var TOptions
      */
-    protected $options = [
+    protected array $options = [
         'identifier' => 'id',
         'index' => '',
     ];
 
     /**
      * PropertyAccessor instance.
-     *
-     * @var PropertyAccessorInterface
      */
-    protected $propertyAccessor;
+    protected ?PropertyAccessorInterface $propertyAccessor = null;
 
     /**
      * Instanciates a new Mapper.
      *
-     * @phpstan-param array<string, mixed> $options
+     * @param array<string, mixed> $options
      */
     public function __construct(array $options = [], ?EventDispatcherInterface $dispatcher = null)
     {
@@ -85,9 +78,7 @@ class ModelToElasticaAutoTransformer implements ModelToElasticaTransformerInterf
      * transform a nested document or an object property into an array of ElasticaDocument.
      *
      * @param array<object>|\Traversable<object>|\ArrayAccess<mixed,mixed>|null $objects the object to convert
-     * @param array                                                             $fields  the keys we want to have in the returned array
-     *
-     * @phpstan-param TFields $fields
+     * @param TFields                                                           $fields  the keys we want to have in the returned array
      *
      * @return array<mixed>
      */
@@ -124,7 +115,7 @@ class ModelToElasticaAutoTransformer implements ModelToElasticaTransformerInterf
                 $v = $v->format('c');
             } elseif ($v instanceof \DateInterval) {
                 $v = $v->format('P%yY%mM%dDT%hH%iM%sS');
-            } elseif (\PHP_VERSION_ID >= 80100 && $v instanceof \BackedEnum) {
+            } elseif ($v instanceof \BackedEnum) {
                 $v = $v->value;
             } elseif (!\is_scalar($v) && null !== $v) {
                 $v = (string) $v;
@@ -144,7 +135,7 @@ class ModelToElasticaAutoTransformer implements ModelToElasticaTransformerInterf
     /**
      * Transforms the given object to an elastica document.
      *
-     * @phpstan-param TFields $fields
+     * @param TFields $fields
      */
     protected function transformObjectToDocument(object $object, array $fields, string $identifier = ''): Document
     {

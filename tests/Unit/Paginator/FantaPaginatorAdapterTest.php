@@ -79,10 +79,10 @@ class FantaPaginatorAdapterTest extends TestCase
         $mock
             ->expects($this->exactly(1))
             ->method('getMaxScore')
-            ->willReturn(123)
+            ->willReturn(123.0)
         ;
         $adapter = new FantaPaginatorAdapter($mock);
-        $this->assertEquals(123, $adapter->getMaxScore());
+        $this->assertEquals(123.0, $adapter->getMaxScore());
     }
 
     private function mockPartialResults($results)

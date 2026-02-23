@@ -26,7 +26,7 @@ interface ManagerInterface
     /**
      * Returns an array of known index names.
      *
-     * @phpstan-return list<string>
+     * @return list<string>
      */
     public function getIndexNames(): array;
 }

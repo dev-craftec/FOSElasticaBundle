@@ -139,6 +139,7 @@ class ElasticaToModelTransformerTest extends TestCase
             ->getMockForAbstractClass()
         ;
         $query->expects($this->any())->method('setHydrationMode')->willReturnSelf();
+        $query->expects($this->any())->method('execute')->willReturn([]);
         $query->expects($this->once())  //  check if the hint is set
             ->method('setHint')
             ->with('customHintName', 'Custom\Hint\Class')

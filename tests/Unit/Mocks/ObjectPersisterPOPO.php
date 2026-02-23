@@ -13,14 +13,14 @@ namespace FOS\ElasticaBundle\Tests\Unit\Mocks;
 
 class ObjectPersisterPOPO
 {
-    public $id = 123;
+    public int $id = 123;
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'popoName';
     }

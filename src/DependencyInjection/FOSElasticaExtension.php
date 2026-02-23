@@ -39,25 +39,21 @@ class FOSElasticaExtension extends Extension
      *
      * @var array<string, array{id: string, reference: Reference}>
      */
-    private $clients = [];
+    private array $clients = [];
 
     /**
      * An array of indexes as configured by the extension.
      *
-     * @var array
-     *
-     * @phpstan-var array<string, TIndexConfig>
+     * @var array<string, TIndexConfig>
      */
-    private $indexConfigs = [];
+    private array $indexConfigs = [];
 
     /**
      * An array of index templates as configured by the extension.
      *
-     * @var array
-     *
-     * @phpstan-var array<string, TIndexTemplateConfig>
+     * @var array<string, TIndexTemplateConfig>
      */
-    private $indexTemplateConfigs = [];
+    private array $indexTemplateConfigs = [];
 
     /**
      * If we've encountered a type mapped to a specific persistence driver, it will be loaded
@@ -65,7 +61,7 @@ class FOSElasticaExtension extends Extension
      *
      * @var list<string>
      */
-    private $loadedDrivers = [];
+    private array $loadedDrivers = [];
 
     public function load(array $configs, ContainerBuilder $container): void
     {

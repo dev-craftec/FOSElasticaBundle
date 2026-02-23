@@ -22,30 +22,18 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class PostAsyncInsertObjectsEvent extends Event implements PersistEvent
 {
-    /**
-     * @var PagerInterface
-     */
-    private $pager;
+    private PagerInterface $pager;
 
-    /**
-     * @var ObjectPersisterInterface
-     */
-    private $objectPersister;
+    private ObjectPersisterInterface $objectPersister;
 
-    /**
-     * @var int
-     */
-    private $objectsCount;
+    private int $objectsCount;
 
-    /**
-     * @var string|null
-     */
-    private $errorMessage;
+    private ?string $errorMessage;
 
     /**
      * @var array<string, mixed>
      */
-    private $options;
+    private array $options;
 
     /**
      * @param array<string, mixed> $options

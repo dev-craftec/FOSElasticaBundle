@@ -13,23 +13,23 @@ namespace FOS\ElasticaBundle\Tests\Functional;
 
 class TypeObject
 {
-    public $id = 5;
-    public $coll;
-    public $field1;
-    public $field2;
-    public $field3;
+    public int $id = 5;
+    public mixed $coll = null;
+    public mixed $field1 = null;
+    public mixed $field2 = null;
+    public mixed $field3 = null;
 
-    public function isIndexable()
+    public function isIndexable(): bool
     {
         return true;
     }
 
-    public function isntIndexable()
+    public function isntIndexable(): bool
     {
         return false;
     }
 
-    public function getSerializableColl()
+    public function getSerializableColl(): array
     {
         return \iterator_to_array($this->coll, false);
     }

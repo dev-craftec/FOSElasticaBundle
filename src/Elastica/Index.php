@@ -20,10 +20,7 @@ use Elastica\Index as BaseIndex;
  */
 class Index extends BaseIndex
 {
-    /**
-     * @var ?string
-     */
-    private $originalName;
+    private ?string $originalName = null;
 
     /**
      * Returns the original name of the index if the index has been renamed for reindexing

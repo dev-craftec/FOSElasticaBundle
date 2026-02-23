@@ -158,7 +158,7 @@ class Client extends BaseClient implements ResetInterface
      * @param array<mixed>|string $data
      * @param array<mixed>        $query
      */
-    private function logQuery(string $path, string $method, $data, array $query, float $queryTime, int $engineMS = 0, int $itemCount = 0): void
+    private function logQuery(string $path, string $method, array|string $data, array $query, float $queryTime, int $engineMS = 0, int $itemCount = 0): void
     {
         if (!$this->_logger instanceof ElasticaLogger) {
             return;

@@ -19,7 +19,7 @@ interface PersistEvent
     public function getPager(): PagerInterface;
 
     /**
-     * @phpstan-return array<string, mixed>
+     * @return array<string, mixed>
      */
     public function getOptions(): array;
 

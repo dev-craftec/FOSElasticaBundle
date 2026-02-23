@@ -11,6 +11,9 @@
 
 namespace FOS\ElasticaBundle\Paginator;
 
+/**
+ * @template T of mixed
+ */
 interface PaginatorAdapterInterface
 {
     /**
@@ -18,7 +21,7 @@ interface PaginatorAdapterInterface
      *
      * @return int The number of results
      */
-    public function getTotalHits();
+    public function getTotalHits(): int;
 
     /**
      * Returns an slice of the results.
@@ -26,28 +29,26 @@ interface PaginatorAdapterInterface
      * @param int $offset The offset
      * @param int $length The length
      *
-     * @return PartialResultsInterface
+     * @return PartialResultsInterface<T>
      */
-    public function getResults($offset, $length);
+    public function getResults(int $offset, int $length): PartialResultsInterface;
 
     /**
      * Returns Aggregations.
      *
      * @return array<string, mixed>
      */
-    public function getAggregations();
+    public function getAggregations(): array;
 
     /**
      * Returns Suggests.
      *
      * @return array<string, mixed>
      */
-    public function getSuggests();
+    public function getSuggests(): array;
 
     /**
      * Returns the max score.
-     *
-     * @return float
      */
-    public function getMaxScore();
+    public function getMaxScore(): float;
 }

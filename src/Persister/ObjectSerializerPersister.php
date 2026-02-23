@@ -27,18 +27,14 @@ use FOS\ElasticaBundle\Transformer\ModelToElasticaTransformerInterface;
 class ObjectSerializerPersister extends ObjectPersister
 {
     /**
-     * @var callable
-     *
-     * @phpstan-var TSerializer
+     * @var TSerializer
      */
-    protected $serializer;
+    protected mixed $serializer;
 
     /**
-     * @param callable $serializer
-     *
-     * @phpstan-param TSerializer $serializer
+     * @param TSerializer $serializer
      */
-    public function __construct(Index $index, ModelToElasticaTransformerInterface $transformer, string $objectClass, $serializer, array $options = [])
+    public function __construct(Index $index, ModelToElasticaTransformerInterface $transformer, string $objectClass, mixed $serializer, array $options = [])
     {
         parent::__construct($index, $transformer, $objectClass, [], $options);
 

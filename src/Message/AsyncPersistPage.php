@@ -18,20 +18,15 @@ use FOS\ElasticaBundle\Event\AbstractIndexPopulateEvent;
  */
 class AsyncPersistPage
 {
-    /**
-     * @var int
-     */
-    private $page;
+    private int $page;
 
     /**
-     * @var array
-     *
-     * @phpstan-var TOptions
+     * @var TOptions
      */
-    private $options;
+    private array $options;
 
     /**
-     * @phpstan-param TOptions $options
+     * @param TOptions $options
      */
     public function __construct(int $page, array $options)
     {
@@ -45,7 +40,7 @@ class AsyncPersistPage
     }
 
     /**
-     * @phpstan-return TOptions
+     * @return TOptions
      */
     public function getOptions(): array
     {

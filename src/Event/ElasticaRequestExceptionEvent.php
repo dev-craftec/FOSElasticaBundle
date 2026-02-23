@@ -21,7 +21,7 @@ class ElasticaRequestExceptionEvent
 
     public function __construct(
         RequestInterface $request,
-        ElasticsearchException $exception
+        ElasticsearchException $exception,
     ) {
         $this->request = $request;
         $this->exception = $exception;

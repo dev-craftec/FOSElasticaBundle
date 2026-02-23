@@ -17,8 +17,6 @@ use FOS\ElasticaBundle\Configuration\ManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class Template resetter.
- *
  * @author Dmitry Balabka <dmitry.balabka@intexsys.lv>
  */
 class TemplateResetter implements ResetterInterface

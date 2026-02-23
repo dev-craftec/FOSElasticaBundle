@@ -30,20 +30,15 @@ namespace FOS\ElasticaBundle\Event;
  */
 abstract class AbstractIndexPopulateEvent extends AbstractIndexEvent
 {
-    /**
-     * @var bool
-     */
-    protected $reset;
+    protected bool $reset;
 
     /**
-     * @var array
-     *
-     * @phpstan-var TOptions
+     * @var TOptions
      */
-    protected $options;
+    protected array $options;
 
     /**
-     * @phpstan-param TOptions $options
+     * @param TOptions $options
      */
     public function __construct(string $index, bool $reset, array $options)
     {
@@ -59,7 +54,7 @@ abstract class AbstractIndexPopulateEvent extends AbstractIndexEvent
     }
 
     /**
-     * @phpstan-return TOptions
+     * @return TOptions
      */
     public function getOptions(): array
     {

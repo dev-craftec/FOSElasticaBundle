@@ -20,7 +20,7 @@ class IndexManager
     /**
      * @var array<string, Index>
      */
-    private $indexes;
+    private array $indexes;
 
     /**
      * @param array<string, Index> $indexes

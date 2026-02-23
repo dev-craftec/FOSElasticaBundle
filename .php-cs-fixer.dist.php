@@ -11,7 +11,7 @@ EOF;
 
 return (new PhpCsFixer\Config())
     ->setRules([
-        '@PHP71Migration' => true,
+        '@PHP82Migration' => true,
         '@PSR2' => true,
         '@PhpCsFixer' => true,
         '@Symfony' => true,

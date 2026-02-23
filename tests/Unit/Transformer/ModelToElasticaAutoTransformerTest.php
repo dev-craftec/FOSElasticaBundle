@@ -537,9 +537,6 @@ class ModelToElasticaAutoTransformerTest extends TestCase
         $this->assertSame('00000000-0000-0000-0000-000000000000', $document->getId());
     }
 
-    /**
-     * @requires PHP >= 8.1
-     */
     public function testBackedEnumIsCastedToItsValue(): void
     {
         $object = new \stdClass();

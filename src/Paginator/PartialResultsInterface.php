@@ -11,12 +11,15 @@
 
 namespace FOS\ElasticaBundle\Paginator;
 
+/**
+ * @template T of mixed
+ */
 interface PartialResultsInterface
 {
     /**
      * Returns the paginated results.
      *
-     * @return array<mixed>
+     * @return list<T>
      */
     public function toArray(): array;
 

@@ -13,12 +13,12 @@ namespace FOS\ElasticaBundle\Tests\Functional\app\ORM;
 
 class IndexableService
 {
-    public function isIndexable()
+    public function isIndexable(): bool
     {
         return true;
     }
 
-    public static function isntIndexable()
+    public static function isntIndexable(): bool
     {
         return false;
     }

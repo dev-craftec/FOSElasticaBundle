@@ -83,19 +83,6 @@ class AbstractElasticaToModelTransformerTest extends TestCase
         $this->assertSame(Foo::class, $transformer->getObjectClass());
     }
 
-    public function resultsWithMatchingObjects()
-    {
-        $elasticaResults = $doctrineObjects = [];
-        for ($i = 1; $i < 4; ++$i) {
-            $elasticaResults[] = new Result(['_id' => $i, 'highlight' => ['foo']]);
-            $doctrineObjects[] = new Foo($i);
-        }
-
-        return [
-            [$elasticaResults, $doctrineObjects],
-        ];
-    }
-
     /**
      * @dataProvider resultsWithMatchingObjects
      */
@@ -228,6 +215,19 @@ class AbstractElasticaToModelTransformerTest extends TestCase
         }
     }
 
+    public function resultsWithMatchingObjects()
+    {
+        $elasticaResults = $doctrineObjects = [];
+        for ($i = 1; $i < 4; ++$i) {
+            $elasticaResults[] = new Result(['_id' => $i, 'highlight' => ['foo']]);
+            $doctrineObjects[] = new Foo($i);
+        }
+
+        return [
+            [$elasticaResults, $doctrineObjects],
+        ];
+    }
+
     public function testIdentifierFieldDefaultsToId()
     {
         $transformer = $this->createMockTransformer();
@@ -272,20 +272,20 @@ class AbstractElasticaToModelTransformerTest extends TestCase
 
 class Foo implements HighlightableModelInterface
 {
-    public $id;
-    public $highlights;
+    public mixed $id;
+    public ?array $highlights = null;
 
     public function __construct($id)
     {
         $this->id = $id;
     }
 
-    public function getId()
+    public function getId(): mixed
     {
         return $this->id;
     }
 
-    public function setElasticHighlights(array $highlights)
+    public function setElasticHighlights(array $highlights): void
     {
         $this->highlights = $highlights;
     }

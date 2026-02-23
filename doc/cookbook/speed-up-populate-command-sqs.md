@@ -69,16 +69,11 @@ use FOS\ElasticaBundle\Persister\Event\PrePersistEvent;
 class QueuePagerPersister
 {
     /** @var string AWS SQS queue name */
-    protected $queueName;
+    protected string $queueName;
 
     /** @var string AWS SQS reply queue name */
-    protected $replyQueueName;
+    protected string $replyQueueName;
 
-    /**
-     * Constructor.
-     *
-     * @param string $queueName
-     */
     public function __construct(string $queueName, string $replyQueueName)
     {
         $this->queueName = $queueName;
@@ -87,10 +82,8 @@ class QueuePagerPersister
 
     /**
      * Specifies AWS SQS queue name.
-     *
-     * @param PrePersistEvent $event
      */
-    public function prePersist(PrePersistEvent $event)
+    public function prePersist(PrePersistEvent $event): void
     {
         $options = $event->getOptions();
         $options['populate_queue'] = $this->queueName;

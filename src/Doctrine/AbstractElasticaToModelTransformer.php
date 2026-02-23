@@ -24,15 +24,12 @@ use FOS\ElasticaBundle\Transformer\HighlightableModelInterface;
  */
 abstract class AbstractElasticaToModelTransformer extends BaseTransformer
 {
-    /**
-     * Manager registry.
-     */
     protected ManagerRegistry $registry;
 
     /**
      * Class of the model to map to the elastica documents.
      *
-     * @phpstan-var class-string
+     * @var class-string
      */
     protected string $objectClass;
 
@@ -71,11 +68,9 @@ abstract class AbstractElasticaToModelTransformer extends BaseTransformer
      *
      * @param Result[] $elasticaObjects of elastica objects
      *
-     * @return array
-     *
      * @throws \RuntimeException
      */
-    public function transform(array $elasticaObjects)
+    public function transform(array $elasticaObjects): array
     {
         $ids = $highlights = [];
         foreach ($elasticaObjects as $elasticaObject) {
@@ -122,7 +117,10 @@ abstract class AbstractElasticaToModelTransformer extends BaseTransformer
         return $objects;
     }
 
-    public function hybridTransform(array $elasticaObjects)
+    /**
+     * @return list<HybridResult>
+     */
+    public function hybridTransform(array $elasticaObjects): array
     {
         $indexedElasticaResults = [];
         foreach ($elasticaObjects as $elasticaObject) {
@@ -157,5 +155,5 @@ abstract class AbstractElasticaToModelTransformer extends BaseTransformer
      *
      * @return array of objects or arrays
      */
-    abstract protected function findByIdentifiers(array $identifierValues, bool $hydrate);
+    abstract protected function findByIdentifiers(array $identifierValues, bool $hydrate): array;
 }

@@ -47,30 +47,28 @@ interface IndexConfigInterface
     public function getName(): string;
 
     /**
-     * @phpstan-return TSettings
+     * @return TSettings
      */
     public function getSettings(): array;
 
     public function getDateDetection(): ?bool;
 
     /**
-     * @phpstan-return ?TDynamicDateFormats
+     * @return ?TDynamicDateFormats
      */
     public function getDynamicDateFormats(): ?array;
 
     public function getAnalyzer(): ?string;
 
     /**
-     * @phpstan-return TMapping
+     * @return TMapping
      */
     public function getMapping(): array;
 
     public function getNumericDetection(): ?bool;
 
     /**
-     * @return string|bool|null
-     *
-     * @phpstan-return ?TDynamic
+     * @return ?TDynamic
      */
-    public function getDynamic();
+    public function getDynamic(): string|bool|null;
 }

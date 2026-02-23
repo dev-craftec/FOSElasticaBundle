@@ -17,17 +17,13 @@ abstract class AbstractElasticaToModelTransformer implements ElasticaToModelTran
 {
     /**
      * PropertyAccessor instance.
-     *
-     * @var PropertyAccessorInterface
      */
-    protected $propertyAccessor;
+    protected ?PropertyAccessorInterface $propertyAccessor = null;
 
     /**
      * Set the PropertyAccessor instance.
-     *
-     * @return void
      */
-    public function setPropertyAccessor(PropertyAccessorInterface $propertyAccessor)
+    public function setPropertyAccessor(PropertyAccessorInterface $propertyAccessor): void
     {
         $this->propertyAccessor = $propertyAccessor;
     }

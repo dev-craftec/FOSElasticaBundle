@@ -17,35 +17,23 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class OnExceptionEvent extends Event implements PersistEvent
 {
-    /**
-     * @var PagerInterface
-     */
-    private $pager;
+    private PagerInterface $pager;
 
-    /**
-     * @var ObjectPersisterInterface
-     */
-    private $objectPersister;
+    private ObjectPersisterInterface $objectPersister;
 
-    /**
-     * @var \Exception
-     */
-    private $exception;
+    private \Exception $exception;
 
     /**
      * @var array<string, mixed>
      */
-    private $options;
+    private array $options;
 
     /**
      * @var list<object>
      */
-    private $objects;
+    private array $objects;
 
-    /**
-     * @var bool
-     */
-    private $ignored = false;
+    private bool $ignored = false;
 
     /**
      * @param list<object>         $objects
@@ -85,10 +73,7 @@ final class OnExceptionEvent extends Event implements PersistEvent
         return $this->exception;
     }
 
-    /**
-     * @return void
-     */
-    public function setException(\Exception $exception)
+    public function setException(\Exception $exception): void
     {
         $this->exception = $exception;
     }
@@ -98,10 +83,7 @@ final class OnExceptionEvent extends Event implements PersistEvent
         return $this->ignored;
     }
 
-    /**
-     * @return void
-     */
-    public function setIgnored(bool $ignored)
+    public function setIgnored(bool $ignored): void
     {
         $this->ignored = $ignored;
     }

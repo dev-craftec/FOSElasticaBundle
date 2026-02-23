@@ -47,7 +47,7 @@ class ElasticaLoggerTest extends TestCase
         $path = 'testPath';
         $method = 'testMethod';
         $data = ['data'];
-        $time = 12;
+        $time = 12.0;
         $connection = ['host' => 'localhost', 'port' => '8999', 'transport' => 'https'];
         $query = ['search_type' => 'dfs_query_then_fetch'];
 
@@ -55,7 +55,7 @@ class ElasticaLoggerTest extends TestCase
             'path' => $path,
             'method' => $method,
             'data' => [$data],
-            'executionMS' => $time * 1000,
+            'executionMS' => $time * 1_000,
             'engineMS' => 0,
             'connection' => $connection,
             'queryString' => $query,
@@ -107,6 +107,19 @@ class ElasticaLoggerTest extends TestCase
     }
 
     /**
+     * @dataProvider logLevels
+     */
+    public function testMessagesCanBeLoggedAtSpecificLogLevels($level)
+    {
+        $message = 'foo';
+        $context = ['data'];
+
+        $loggerMock = $this->getMockLoggerForLevelMessageAndContext($level, $message, $context);
+
+        \call_user_func([$loggerMock, $level], $message, $context);
+    }
+
+    /**
      * @return array
      */
     public function logLevels()
@@ -121,19 +134,6 @@ class ElasticaLoggerTest extends TestCase
             ['info'],
             ['debug'],
         ];
-    }
-
-    /**
-     * @dataProvider logLevels
-     */
-    public function testMessagesCanBeLoggedAtSpecificLogLevels($level)
-    {
-        $message = 'foo';
-        $context = ['data'];
-
-        $loggerMock = $this->getMockLoggerForLevelMessageAndContext($level, $message, $context);
-
-        \call_user_func([$loggerMock, $level], $message, $context);
     }
 
     public function testMessagesCanBeLoggedToArbitraryLevels()

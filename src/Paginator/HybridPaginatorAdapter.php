@@ -20,7 +20,7 @@ use FOS\ElasticaBundle\Transformer\ElasticaToModelTransformerInterface;
  */
 class HybridPaginatorAdapter extends RawPaginatorAdapter
 {
-    private $transformer;
+    private ElasticaToModelTransformerInterface $transformer;
 
     /**
      * @param SearchableInterface                 $searchable  the object to search in
@@ -34,7 +34,7 @@ class HybridPaginatorAdapter extends RawPaginatorAdapter
         $this->transformer = $transformer;
     }
 
-    public function getResults($offset, $length)
+    public function getResults(int $offset, int $length): PartialResultsInterface
     {
         return new HybridPartialResults($this->getElasticaResults($offset, $length), $this->transformer);
     }

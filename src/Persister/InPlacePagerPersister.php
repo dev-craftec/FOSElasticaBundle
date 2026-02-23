@@ -36,7 +36,7 @@ final class InPlacePagerPersister implements PagerPersisterInterface
         $this->dispatcher = $dispatcher;
     }
 
-    public function insert(PagerInterface $pager, array $options = [])
+    public function insert(PagerInterface $pager, array $options = []): void
     {
         $pager->setMaxPerPage(empty($options['max_per_page']) ? 100 : $options['max_per_page']);
 
@@ -70,7 +70,7 @@ final class InPlacePagerPersister implements PagerPersisterInterface
     }
 
     /**
-     * @phpstan-param TPagerPersisterOptions $options
+     * @param TPagerPersisterOptions $options
      *
      * @throws \Exception
      */

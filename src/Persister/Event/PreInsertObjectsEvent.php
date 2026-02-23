@@ -17,25 +17,19 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class PreInsertObjectsEvent extends Event implements PersistEvent
 {
-    /**
-     * @var PagerInterface
-     */
-    private $pager;
+    private PagerInterface $pager;
 
-    /**
-     * @var ObjectPersisterInterface
-     */
-    private $objectPersister;
+    private ObjectPersisterInterface $objectPersister;
 
     /**
      * @var list<object>
      */
-    private $objects;
+    private array $objects;
 
     /**
      * @var array<string, mixed>
      */
-    private $options;
+    private array $options;
 
     private int $filteredObjectCount = 0;
 
@@ -56,10 +50,7 @@ final class PreInsertObjectsEvent extends Event implements PersistEvent
         return $this->pager;
     }
 
-    /**
-     * @return void
-     */
-    public function setPager(PagerInterface $pager)
+    public function setPager(PagerInterface $pager): void
     {
         $this->pager = $pager;
     }
@@ -71,10 +62,8 @@ final class PreInsertObjectsEvent extends Event implements PersistEvent
 
     /**
      * @param array<string, mixed> $options
-     *
-     * @return void
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
         $this->options = $options;
     }
@@ -84,10 +73,7 @@ final class PreInsertObjectsEvent extends Event implements PersistEvent
         return $this->objectPersister;
     }
 
-    /**
-     * @return void
-     */
-    public function setObjectPersister(ObjectPersisterInterface $objectPersister)
+    public function setObjectPersister(ObjectPersisterInterface $objectPersister): void
     {
         $this->objectPersister = $objectPersister;
     }
@@ -95,17 +81,15 @@ final class PreInsertObjectsEvent extends Event implements PersistEvent
     /**
      * @return list<object>
      */
-    public function getObjects()
+    public function getObjects(): array
     {
         return $this->objects;
     }
 
     /**
      * @param list<object> $objects
-     *
-     * @return void
      */
-    public function setObjects($objects)
+    public function setObjects(array $objects): void
     {
         $this->objects = $objects;
     }

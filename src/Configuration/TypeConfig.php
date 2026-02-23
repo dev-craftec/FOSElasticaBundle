@@ -20,28 +20,20 @@ namespace FOS\ElasticaBundle\Configuration;
 class TypeConfig
 {
     /**
-     * @var array
-     *
-     * @phpstan-var TElasticConfig
+     * @var TElasticConfig
      */
-    private $config;
+    private array $config;
 
     /**
-     * @var array
-     *
-     * @phpstan-var TMapping
+     * @var TMapping
      */
-    private $mapping;
+    private array $mapping;
+
+    private string $name;
 
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @param TMapping $mapping
-     *
-     * @phpstan-param TElasticConfig $config
+     * @param TMapping       $mapping
+     * @param TElasticConfig $config
      */
     public function __construct(string $name, array $mapping, array $config = [])
     {
@@ -56,7 +48,7 @@ class TypeConfig
     }
 
     /**
-     * @phpstan-return ?TDynamicDateFormats
+     * @return ?TDynamicDateFormats
      */
     public function getDynamicDateFormats(): ?array
     {
@@ -69,7 +61,7 @@ class TypeConfig
     }
 
     /**
-     * @phpstan-return TMapping
+     * @return TMapping
      */
     public function getMapping(): array
     {
@@ -87,9 +79,9 @@ class TypeConfig
     }
 
     /**
-     * @phpstan-return ?TDynamic
+     * @return ?TDynamic
      */
-    public function getDynamic()
+    public function getDynamic(): string|bool|null
     {
         return $this->config['dynamic'] ?? null;
     }

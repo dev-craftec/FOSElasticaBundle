@@ -21,7 +21,7 @@ use FOS\ElasticaBundle\Event\AbstractIndexPopulateEvent;
 interface PagerProviderInterface
 {
     /**
-     * @phpstan-param TPagerProviderOptions $options
+     * @param TPagerProviderOptions $options
      */
     public function provide(array $options = []): PagerInterface;
 }

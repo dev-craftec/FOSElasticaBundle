@@ -14,7 +14,7 @@ namespace FOS\ElasticaBundle\Paginator;
 use Pagerfanta\Adapter\AdapterInterface;
 
 /**
- * @template T
+ * @template T of mixed
  *
  * @implements AdapterInterface<T>
  */
@@ -22,15 +22,11 @@ class FantaPaginatorAdapter implements AdapterInterface
 {
     /**
      * @var PaginatorAdapterInterface<T>
-     *
-     * @phpstan-ignore-next-line todo: make PaginatorAdapterInterface generic
      */
-    private $adapter;
+    private PaginatorAdapterInterface $adapter;
 
     /**
      * @param PaginatorAdapterInterface<T> $adapter
-     *
-     * @phpstan-ignore-next-line todo: make PaginatorAdapterInterface generic
      */
     public function __construct(PaginatorAdapterInterface $adapter)
     {
@@ -52,7 +48,7 @@ class FantaPaginatorAdapter implements AdapterInterface
      *
      * @api
      */
-    public function getAggregations()
+    public function getAggregations(): array
     {
         return $this->adapter->getAggregations();
     }
@@ -64,7 +60,7 @@ class FantaPaginatorAdapter implements AdapterInterface
      *
      * @api
      */
-    public function getSuggests()
+    public function getSuggests(): array
     {
         return $this->adapter->getSuggests();
     }
@@ -75,15 +71,12 @@ class FantaPaginatorAdapter implements AdapterInterface
      * @param int $offset The offset
      * @param int $length The length
      */
-    public function getSlice($offset, $length): iterable
+    public function getSlice(int $offset, int $length): iterable
     {
         return $this->adapter->getResults($offset, $length)->toArray();
     }
 
-    /**
-     * @return float
-     */
-    public function getMaxScore()
+    public function getMaxScore(): float
     {
         return $this->adapter->getMaxScore();
     }

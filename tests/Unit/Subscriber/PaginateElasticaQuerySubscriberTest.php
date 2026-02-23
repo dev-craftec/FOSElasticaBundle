@@ -44,34 +44,6 @@ class PaginateElasticaQuerySubscriberTest extends TestCase
         $subscriber->items($event);
     }
 
-    public function sortCases()
-    {
-        $tests = [];
-
-        $expected = [
-            'createdAt' => [
-                'order' => 'asc',
-            ],
-        ];
-        $tests[] = [$expected, new Request()];
-
-        $expected = [
-            'name' => [
-                'order' => 'desc',
-            ],
-        ];
-        $tests[] = [$expected, new Request(['ord' => 'name', 'az' => 'desc'])];
-
-        $expected = [
-            'updatedAt' => [
-                'order' => 'asc',
-            ],
-        ];
-        $tests[] = [$expected, new Request(['ord' => 'updatedAt', 'az' => 'invalid'])];
-
-        return $tests;
-    }
-
     /**
      * @dataProvider sortCases
      */
@@ -100,6 +72,34 @@ class PaginateElasticaQuerySubscriberTest extends TestCase
         $subscriber->items($event);
 
         $this->assertSame($expected, $query->getParam('sort'));
+    }
+
+    public function sortCases()
+    {
+        $tests = [];
+
+        $expected = [
+            'createdAt' => [
+                'order' => 'asc',
+            ],
+        ];
+        $tests[] = [$expected, new Request()];
+
+        $expected = [
+            'name' => [
+                'order' => 'desc',
+            ],
+        ];
+        $tests[] = [$expected, new Request(['ord' => 'name', 'az' => 'desc'])];
+
+        $expected = [
+            'updatedAt' => [
+                'order' => 'asc',
+            ],
+        ];
+        $tests[] = [$expected, new Request(['ord' => 'updatedAt', 'az' => 'invalid'])];
+
+        return $tests;
     }
 
     public function testShouldThrowIfFieldIsNotWhitelisted()

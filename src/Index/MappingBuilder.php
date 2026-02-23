@@ -70,7 +70,7 @@ class MappingBuilder
     /**
      * Builds mappings for a single type.
      *
-     * @phpstan-return TMapping
+     * @return TMapping
      */
     public function buildMapping(?string $model, IndexConfigInterface $indexConfig): array
     {
@@ -122,7 +122,7 @@ class MappingBuilder
     {
         foreach ($properties as $name => &$property) {
             unset($property['property_path']);
-            $property['type'] = $property['type'] ?? 'text';
+            $property['type'] ??= 'text';
 
             if (isset($property['fields'])) {
                 $this->fixProperties($property['fields']);

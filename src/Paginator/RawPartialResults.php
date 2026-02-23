@@ -16,13 +16,14 @@ use Elastica\ResultSet;
 
 /**
  * Raw partial results transforms to a simple array.
+ *
+ * @template T of mixed
+ *
+ * @implements PartialResultsInterface<T>
  */
 class RawPartialResults implements PartialResultsInterface
 {
-    /**
-     * @var ResultSet
-     */
-    protected $resultSet;
+    protected ResultSet $resultSet;
 
     public function __construct(ResultSet $resultSet)
     {
@@ -30,7 +31,7 @@ class RawPartialResults implements PartialResultsInterface
     }
 
     /**
-     * @return list<array<string, mixed>>
+     * @return list<T>
      */
     public function toArray(): array
     {

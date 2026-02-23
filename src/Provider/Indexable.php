@@ -24,30 +24,24 @@ class Indexable implements IndexableInterface
     /**
      * An array of raw configured callbacks for all types.
      *
-     * @var array
-     *
-     * @phpstan-var array<string, TCallbackInput>
+     * @var array<string, TCallbackInput>
      */
-    private $callbacks = [];
+    private array $callbacks = [];
 
     /**
      * An instance of ExpressionLanguage.
-     *
-     * @var ExpressionLanguage
      */
-    private $expressionLanguage;
+    private ?ExpressionLanguage $expressionLanguage = null;
 
     /**
      * An array of initialised callbacks.
      *
-     * @var array
-     *
-     * @phpstan-var array<string, TCallbackInternal>
+     * @var array<string, TCallbackInternal>
      */
-    private $initialisedCallbacks = [];
+    private array $initialisedCallbacks = [];
 
     /**
-     * @phpstan-param array<string, TCallbackInput> $callbacks
+     * @param array<string, TCallbackInput> $callbacks
      */
     public function __construct(array $callbacks)
     {
@@ -78,11 +72,9 @@ class Indexable implements IndexableInterface
     /**
      * Builds and initialises a callback.
      *
-     * @return callable|string|ExpressionLanguage|null
-     *
-     * @phpstan-return TCallbackInternal
+     * @return TCallbackInternal
      */
-    private function buildCallback(string $index, object $object)
+    private function buildCallback(string $index, object $object): mixed
     {
         if (!\array_key_exists($index, $this->callbacks)) {
             return null;
@@ -126,9 +118,9 @@ class Indexable implements IndexableInterface
     /**
      * Retreives a cached callback, or creates a new callback if one is not found.
      *
-     * @phpstan-return TCallbackInternal
+     * @return TCallbackInternal
      */
-    private function getCallback(string $index, object $object)
+    private function getCallback(string $index, object $object): mixed
     {
         if (!\array_key_exists($index, $this->initialisedCallbacks)) {
             $this->initialisedCallbacks[$index] = $this->buildCallback($index, $object);
@@ -139,8 +131,6 @@ class Indexable implements IndexableInterface
 
     /**
      * Returns the ExpressionLanguage class if it is available.
-     *
-     * @phpstan-ignore-next-line ExpressionLanguage may be missing -> returns null
      */
     private function getExpressionLanguage(): ?ExpressionLanguage
     {

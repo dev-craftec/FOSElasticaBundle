@@ -41,7 +41,7 @@ class WebTestCase extends BaseKernelTestCase
         return AppKernel::class;
     }
 
-    protected static function deleteTmpDir()
+    protected static function deleteTmpDir(): void
     {
         if (!\file_exists($dir = \sys_get_temp_dir().'/'.static::getVarDir())) {
             return;
@@ -67,25 +67,8 @@ class WebTestCase extends BaseKernelTestCase
         );
     }
 
-    protected static function getVarDir()
+    protected static function getVarDir(): string
     {
         return \substr(\strrchr(static::class, '\\'), 1);
-    }
-
-    /**
-     * To be removed when dropping support of Symfony < 5.3.
-     */
-    public static function __callStatic(string $name, $arguments)
-    {
-        if ('getContainer' === $name) {
-            if (\method_exists(BaseKernelTestCase::class, $name)) {
-                return self::getContainer();
-            }
-
-            // @phpstan-ignore-next-line
-            return self::$container;
-        }
-
-        throw new \BadMethodCallException("Method {$name} is not supported.");
     }
 }

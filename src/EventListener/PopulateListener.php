@@ -21,14 +21,8 @@ use FOS\ElasticaBundle\Index\Resetter;
  */
 class PopulateListener
 {
-    /**
-     * @var Resetter
-     */
-    private $resetter;
+    private Resetter $resetter;
 
-    /**
-     * PopulateListener constructor.
-     */
     public function __construct(Resetter $resetter)
     {
         $this->resetter = $resetter;

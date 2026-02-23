@@ -13,15 +13,15 @@ namespace FOS\ElasticaBundle\Tests\Unit\Mocks;
 
 class ObjectSerializerPersisterPOPO
 {
-    public $id = 123;
-    public $name = 'popoName';
+    public int $id = 123;
+    public string $name = 'popoName';
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }

@@ -22,7 +22,7 @@ class PreElasticaRequestEvent extends Event
     /**
      * @var array<string, mixed>|string
      */
-    private $data;
+    private array|string $data;
 
     /**
      * @var array<string, mixed>
@@ -30,12 +30,16 @@ class PreElasticaRequestEvent extends Event
     private array $query;
     private string $contentType;
 
+    /**
+     * @param array<string, mixed>|string $data
+     * @param array<string, mixed>        $query
+     */
     public function __construct(
         string $path,
         string $method,
-        $data,
+        array|string $data,
         array $query,
-        string $contentType = Request::DEFAULT_CONTENT_TYPE
+        string $contentType = Request::DEFAULT_CONTENT_TYPE,
     ) {
         $this->path = $path;
         $this->method = $method;
@@ -57,7 +61,7 @@ class PreElasticaRequestEvent extends Event
     /**
      * @return array<string, mixed>|string
      */
-    public function getData()
+    public function getData(): array|string
     {
         return $this->data;
     }

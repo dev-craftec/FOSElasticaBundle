@@ -23,37 +23,34 @@ class RawPaginatorAdapter implements PaginatorAdapterInterface
     /**
      * @var SearchableInterface the object to search in
      */
-    private $searchable;
+    private SearchableInterface $searchable;
 
     /**
      * @var Query the query to search
      */
-    private $query;
+    private Query $query;
 
     /**
      * @var array<string, mixed> search options
      */
-    private $options;
+    private array $options;
 
     /**
      * @var ?int the number of hits
      */
-    private $totalHits;
+    private ?int $totalHits = null;
 
     /**
      * @var array<string, mixed>|null for the aggregations
      */
-    private $aggregations;
+    private ?array $aggregations = null;
 
     /**
      * @var array<string, mixed>|null for the suggesters
      */
-    private $suggests;
+    private ?array $suggests = null;
 
-    /**
-     * @var ?float
-     */
-    private $maxScore;
+    private ?float $maxScore = null;
 
     /**
      * @see PaginatorAdapterInterface::__construct
@@ -69,7 +66,7 @@ class RawPaginatorAdapter implements PaginatorAdapterInterface
         $this->options = $options;
     }
 
-    public function getResults($offset, $itemCountPerPage)
+    public function getResults(int $offset, int $itemCountPerPage): PartialResultsInterface
     {
         return new RawPartialResults($this->getElasticaResults($offset, $itemCountPerPage));
     }
@@ -82,10 +79,8 @@ class RawPaginatorAdapter implements PaginatorAdapterInterface
      * the requested size.
      *
      * {@inheritdoc}
-     *
-     * @param bool $genuineTotal
      */
-    public function getTotalHits($genuineTotal = false)
+    public function getTotalHits(bool $genuineTotal = false): int
     {
         if (!isset($this->totalHits)) {
             $this->totalHits = $this->searchable->count($this->query);
@@ -96,7 +91,7 @@ class RawPaginatorAdapter implements PaginatorAdapterInterface
             : $this->totalHits;
     }
 
-    public function getAggregations()
+    public function getAggregations(): array
     {
         if (!isset($this->aggregations)) {
             $this->aggregations = $this->searchable->search($this->query)->getAggregations();
@@ -105,7 +100,7 @@ class RawPaginatorAdapter implements PaginatorAdapterInterface
         return $this->aggregations;
     }
 
-    public function getSuggests()
+    public function getSuggests(): array
     {
         if (!isset($this->suggests)) {
             $this->suggests = $this->searchable->search($this->query)->getSuggests();
@@ -114,10 +109,7 @@ class RawPaginatorAdapter implements PaginatorAdapterInterface
         return $this->suggests;
     }
 
-    /**
-     * @return float
-     */
-    public function getMaxScore()
+    public function getMaxScore(): float
     {
         if (!isset($this->maxScore)) {
             $this->maxScore = $this->searchable->search($this->query)->getMaxScore();
@@ -131,7 +123,7 @@ class RawPaginatorAdapter implements PaginatorAdapterInterface
      *
      * @return Query the search query
      */
-    public function getQuery()
+    public function getQuery(): Query
     {
         return $this->query;
     }
@@ -139,17 +131,10 @@ class RawPaginatorAdapter implements PaginatorAdapterInterface
     /**
      * Returns the paginated results.
      *
-     * @param int $offset
-     * @param int $itemCountPerPage
-     *
-     * @return ResultSet
-     *
      * @throws \InvalidArgumentException
      */
-    protected function getElasticaResults($offset, $itemCountPerPage)
+    protected function getElasticaResults(int $offset, int $itemCountPerPage): ResultSet
     {
-        $offset = (int) $offset;
-        $itemCountPerPage = (int) $itemCountPerPage;
         $size = $this->query->hasParam('size')
             ? (int) $this->query->getParam('size')
             : null;

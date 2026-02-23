@@ -29,7 +29,7 @@ class RegisterListenersService
         $this->dispatcher = $dispatcher;
     }
 
-    public function register(ObjectManager $manager, PagerInterface $pager, array $options)
+    public function register(ObjectManager $manager, PagerInterface $pager, array $options): void
     {
         $options = \array_replace([
             'clear_object_manager' => true,
@@ -68,10 +68,7 @@ class RegisterListenersService
         }
     }
 
-    /**
-     * @param string $eventName
-     */
-    private function addListener(PagerInterface $pager, $eventName, \Closure $callable)
+    private function addListener(PagerInterface $pager, string $eventName, \Closure $callable): void
     {
         $this->dispatcher->addListener($eventName, function (PersistEvent $event) use ($pager, $callable) {
             if ($event->getPager() !== $pager) {

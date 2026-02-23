@@ -20,25 +20,17 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 abstract class AbstractTransformEvent extends Event
 {
-    /**
-     * @var Document
-     */
-    protected $document;
+    protected Document $document;
 
     /**
-     * @var array
-     *
-     * @phpstan-var TFields
+     * @var TFields
      */
-    private $fields;
+    private array $fields;
+
+    private object $object;
 
     /**
-     * @var object
-     */
-    private $object;
-
-    /**
-     * @phpstan-param TFields $fields
+     * @param TFields $fields
      */
     public function __construct(Document $document, array $fields, object $object)
     {
@@ -53,7 +45,7 @@ abstract class AbstractTransformEvent extends Event
     }
 
     /**
-     * @phpstan-return TFields
+     * @return TFields
      */
     public function getFields(): array
     {

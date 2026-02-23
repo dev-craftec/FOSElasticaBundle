@@ -79,7 +79,7 @@ class ClientTest extends TestCase
                 }
 
                 if (0 === $counter) {
-                    if (!($o instanceof PreElasticaRequestEvent)) {
+                    if (!$o instanceof PreElasticaRequestEvent) {
                         return false;
                     }
 
@@ -89,7 +89,7 @@ class ClientTest extends TestCase
                     $this->assertEquals(['query' => 'data'], $o->getQuery());
                     $this->assertEquals(Request::DEFAULT_CONTENT_TYPE, $o->getContentType());
                 } elseif (1 === $counter) {
-                    if (!($o instanceof PostElasticaRequestEvent)) {
+                    if (!$o instanceof PostElasticaRequestEvent) {
                         return false;
                     }
 
@@ -158,7 +158,7 @@ class ClientTest extends TestCase
                 }
 
                 if (0 === $counter) {
-                    if (!($o instanceof PreElasticaRequestEvent)) {
+                    if (!$o instanceof PreElasticaRequestEvent) {
                         return false;
                     }
 
@@ -168,7 +168,7 @@ class ClientTest extends TestCase
                     $this->assertEquals(['query' => 'data'], $o->getQuery());
                     $this->assertEquals(Request::DEFAULT_CONTENT_TYPE, $o->getContentType());
                 } elseif (1 === $counter) {
-                    if (!($o instanceof ElasticaRequestExceptionEvent)) {
+                    if (!$o instanceof ElasticaRequestExceptionEvent) {
                         return false;
                     }
 

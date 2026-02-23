@@ -33,7 +33,7 @@ interface ModelToElasticaTransformerInterface
     /**
      * Transforms an object into an elastica object having the required keys.
      *
-     * @phpstan-param TFields $fields
+     * @param TFields $fields
      */
     public function transform(object $object, array $fields): Document;
 }

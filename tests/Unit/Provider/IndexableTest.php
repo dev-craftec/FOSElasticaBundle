@@ -40,6 +40,23 @@ class IndexableTest extends TestCase
         $this->assertSame($return, $index);
     }
 
+    public function provideIsIndexableCallbacks()
+    {
+        return [
+            ['isIndexable', false],
+            [[new IndexableDecider(), 'isIndexable'], true],
+            [new IndexableDecider(), true],
+            [function (Entity $entity) {
+                return $entity->maybeIndex();
+            }, true],
+            ['entity.maybeIndex()', true],
+            ['!object.isIndexable() && entity.property == "abc"', true],
+            ['entity.property != "abc"', false],
+            ['["array", "values"]', true],
+            ['[]', false],
+        ];
+    }
+
     /**
      * @dataProvider provideInvalidIsIndexableCallbacks
      */
@@ -60,23 +77,6 @@ class IndexableTest extends TestCase
             [[new IndexableDecider(), 'internalMethod']],
             [42],
             ['entity.getIsIndexable() && nonexistentEntityFunction()'],
-        ];
-    }
-
-    public function provideIsIndexableCallbacks()
-    {
-        return [
-            ['isIndexable', false],
-            [[new IndexableDecider(), 'isIndexable'], true],
-            [new IndexableDecider(), true],
-            [function (Entity $entity) {
-                return $entity->maybeIndex();
-            }, true],
-            ['entity.maybeIndex()', true],
-            ['!object.isIndexable() && entity.property == "abc"', true],
-            ['entity.property != "abc"', false],
-            ['["array", "values"]', true],
-            ['[]', false],
         ];
     }
 }

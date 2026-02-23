@@ -62,10 +62,7 @@ class PopulateCommand extends Command
         $this->resetter = $resetter;
     }
 
-    /**
-     * @return void
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('fos:elastica:populate')
@@ -85,10 +82,7 @@ class PopulateCommand extends Command
         ;
     }
 
-    /**
-     * @return void
-     */
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         $this->pagerPersister = $this->pagerPersisterRegistry->getPagerPersister($input->getOption('pager-persister'));
 
@@ -139,7 +133,7 @@ class PopulateCommand extends Command
     /**
      * Recreates an index, populates it, and refreshes it.
      *
-     * @phpstan-param TOptions $options
+     * @param TOptions $options
      */
     private function populateIndex(OutputInterface $output, string $index, bool $reset, array $options): void
     {

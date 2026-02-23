@@ -17,13 +17,12 @@ use FOS\ElasticaBundle\Transformer\ElasticaToModelTransformerInterface;
 
 /**
  * Partial transformed result set.
+ *
+ * @extends RawPartialResults<HybridResult>
  */
 class HybridPartialResults extends RawPartialResults
 {
-    /**
-     * @var ElasticaToModelTransformerInterface
-     */
-    protected $transformer;
+    protected ElasticaToModelTransformerInterface $transformer;
 
     public function __construct(ResultSet $resultSet, ElasticaToModelTransformerInterface $transformer)
     {
@@ -34,8 +33,6 @@ class HybridPartialResults extends RawPartialResults
 
     /**
      * @return list<HybridResult>
-     *
-     * @phpstan-ignore-next-line
      */
     public function toArray(): array
     {

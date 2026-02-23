@@ -11,10 +11,10 @@ jobs:
       - name: 'Setup PHP'
         uses: 'shivammathur/setup-php@v2'
         with:
-          php-version: '8.1'
+          php-version: '8.2'
           coverage: 'none'
           extensions: 'json, mbstring, tokenizer'
-          tools: 'composer-normalize, php-cs-fixer:3.60.0'
+          tools: 'composer-normalize, php-cs-fixer:3.94.2'
 
       - name: 'Display tools versions'
         run: |
@@ -37,20 +37,15 @@ jobs:
     strategy:
       matrix:
         php:
-          - '8.1'
           - '8.2'
           - '8.3'
           - '8.4'
         symfony:
-          - '6.4.*'
-          - '7.1.*'
+          - '7.4.*'
         elasticsearch:
           - '8.12.0'
         dependencies:
           - 'highest'
-        exclude:
-          - php: '8.1'
-            symfony: '7.1.*'
       fail-fast: false
     steps:
       - name: 'Checkout'
@@ -78,7 +73,7 @@ jobs:
           sudo sysctl -w vm.swappiness=1
           sudo sysctl -w fs.file-max=262144
           sudo sysctl -w vm.max_map_count=262144
-          docker compose --file=.github/docker/docker-compose.proxy.yml --file=.github/docker/docker-compose.es.yml up --detach
+          docker compose --file=.github/docker/compose.proxy.yaml --file=.github/docker/compose.es.yaml up --detach
 
           docker run --rm --network=docker_elastic curlimages/curl --max-time 120 --retry-max-time 120 --retry 120 --retry-delay 5 --retry-all-errors --show-error --silent http://elasticsearch:9200
 
@@ -95,22 +90,17 @@ jobs:
     strategy:
       matrix:
         php:
-          - '8.1'
           - '8.2'
           - '8.3'
           - '8.4'
         symfony:
-          - '6.4.*'
           - '7.1.*'
         dependencies:
           - 'highest'
         include:
-          - php: '8.1'
+          - php: '8.2'
             dependencies: 'lowest'
-            symfony: '6.4.*'
-        exclude:
-          - php: '8.1'
-            symfony: '7.1.*'
+            symfony: '7.4.*'
 
       fail-fast: false
     steps:

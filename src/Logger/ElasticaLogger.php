@@ -46,13 +46,10 @@ class ElasticaLogger extends AbstractLogger
      * @param float               $queryTime  Execution time (in seconds)
      * @param array<mixed>        $connection Host, port, transport, and headers of the query
      * @param array<mixed>        $query      Arguments
-     * @param int                 $engineTime
-     *
-     * @return void
      */
-    public function logQuery(string $path, string $method, $data, $queryTime, $connection = [], $query = [], $engineTime = 0, int $itemCount = 0)
+    public function logQuery(string $path, string $method, array|string $data, float $queryTime, array $connection = [], array $query = [], int $engineTime = 0, int $itemCount = 0): void
     {
-        $executionMS = $queryTime * 1000;
+        $executionMS = $queryTime * 1_000;
 
         if ($this->debug) {
             $e = new \Exception();
@@ -108,7 +105,7 @@ class ElasticaLogger extends AbstractLogger
     /**
      * @param array<string, mixed> $context
      */
-    public function log($level, $message, array $context = []): void
+    public function log(mixed $level, string|\Stringable $message, array $context = []): void
     {
         $this->logger->log($level, $message, $context);
     }

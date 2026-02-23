@@ -18,8 +18,6 @@ use FOS\ElasticaBundle\Index\IndexTemplateManager;
 use FOS\ElasticaBundle\Index\TemplateResetter;
 
 /**
- * Class Index templates test.
- *
  * @author Dmitry Balabka <dmitry.balabka@intexsys.lv>
  *
  * @internal

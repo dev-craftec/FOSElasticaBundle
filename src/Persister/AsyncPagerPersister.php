@@ -24,20 +24,11 @@ final class AsyncPagerPersister implements PagerPersisterInterface
     public const NAME = 'async';
     private const DEFAULT_PAGE_SIZE = 100;
 
-    /**
-     * @var PagerPersisterRegistry
-     */
-    private $pagerPersisterRegistry;
+    private PagerPersisterRegistry $pagerPersisterRegistry;
 
-    /**
-     * @var PagerProviderRegistry
-     */
-    private $pagerProviderRegistry;
+    private PagerProviderRegistry $pagerProviderRegistry;
 
-    /**
-     * @var MessageBusInterface
-     */
-    private $messageBus;
+    private MessageBusInterface $messageBus;
 
     public function __construct(
         PagerPersisterRegistry $pagerPersisterRegistry,
@@ -71,7 +62,7 @@ final class AsyncPagerPersister implements PagerPersisterInterface
     }
 
     /**
-     * @phpstan-param TPagerPersisterOptions $options
+     * @param TPagerPersisterOptions $options
      */
     public function insertPage(int $page, array $options = []): void
     {

@@ -24,11 +24,9 @@ class ContainerSource implements SourceInterface
     /**
      * The internal container representation of information.
      *
-     * @var array
-     *
-     * @phpstan-var list<TConfig>
+     * @var list<TConfig>
      */
-    private $configArray;
+    private array $configArray;
 
     /**
      * @param list<TConfig> $configArray
@@ -41,9 +39,7 @@ class ContainerSource implements SourceInterface
     /**
      * Should return all configuration available from the data source.
      *
-     * @return IndexConfig[]
-     *
-     * @phpstan-return array<string, IndexConfig>
+     * @return array<string, IndexConfig>
      */
     public function getConfiguration(): array
     {

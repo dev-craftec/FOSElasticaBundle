@@ -22,9 +22,7 @@ use FOS\ElasticaBundle\Provider\PagerInterface;
 interface PagerPersisterInterface
 {
     /**
-     * @phpstan-param TPagerPersisterOptions $options
-     *
-     * @return void
+     * @param TPagerPersisterOptions $options
      */
-    public function insert(PagerInterface $pager, array $options = []);
+    public function insert(PagerInterface $pager, array $options = []): void;
 }

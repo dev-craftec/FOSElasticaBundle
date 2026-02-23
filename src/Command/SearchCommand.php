@@ -34,10 +34,7 @@ class SearchCommand extends Command
         $this->indexManager = $indexManager;
     }
 
-    /**
-     * @return void
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('fos:elastica:search')
@@ -72,15 +69,7 @@ class SearchCommand extends Command
         return 0;
     }
 
-    /**
-     * @param string $showField
-     * @param string $showSource
-     * @param string $showId
-     * @param string $explain
-     *
-     * @return string
-     */
-    protected function formatResult(Result $result, $showField, $showSource, $showId, $explain)
+    protected function formatResult(Result $result, ?string $showField, bool $showSource, bool $showId, bool $explain): string
     {
         $source = $result->getSource();
         if ($showField) {

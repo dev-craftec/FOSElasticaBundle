@@ -25,48 +25,36 @@ trait IndexConfigTrait
 {
     /**
      * The name of the index for ElasticSearch.
-     *
-     * @var string
      */
-    private $elasticSearchName;
+    private string $elasticSearchName;
 
     /**
      * The model of the index.
-     *
-     * @var string|null
      */
-    private $model;
+    private ?string $model = null;
 
     /**
      * The internal name of the index. May not be the same as the name used in ElasticSearch,
      * especially if aliases are enabled.
-     *
-     * @var string
      */
-    private $name;
+    private string $name;
 
     /**
      * An array of settings sent to ElasticSearch when creating the index.
      *
-     * @var array
-     *
-     * @phpstan-var TSettings
+     * @var TSettings
      */
-    private $settings;
+    private array $settings;
 
     /**
-     * @var array
-     *
-     * @phpstan-var TElasticConfig
+     * @var TElasticConfig
      */
-    private $config;
+    private array $config;
 
     /**
-     * @var array
-     *
-     * @phpstan-var TMapping
+     * @var TMapping
      */
-    private $mapping;
+    private array $mapping;
 
     public function getElasticSearchName(): string
     {
@@ -113,7 +101,7 @@ trait IndexConfigTrait
         return $this->config['numeric_detection'] ?? null;
     }
 
-    public function getDynamic()
+    public function getDynamic(): string|bool|null
     {
         return $this->config['dynamic'] ?? null;
     }

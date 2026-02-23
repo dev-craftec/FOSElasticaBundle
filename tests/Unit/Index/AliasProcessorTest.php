@@ -55,6 +55,14 @@ class AliasProcessorTest extends TestCase
         $this->processor->setRootName($indexConfig, $index);
     }
 
+    public function getSetRootNameData()
+    {
+        return [
+            [['name' => 'name', 'config' => [], 'mapping' => [], 'model' => null], 'name_'],
+            [['elasticsearch_name' => 'notname', 'name' => 'name', 'config' => [], 'mapping' => [], 'model' => null], 'notname_'],
+        ];
+    }
+
     public function testSwitchAliasNoAliasSet()
     {
         $indexConfig = new IndexConfig(['name' => 'name', 'config' => [], 'mapping' => [], 'model' => null]);
@@ -314,14 +322,6 @@ class AliasProcessorTest extends TestCase
         $this->expectException(\RuntimeException::class);
 
         $this->processor->switchIndexAlias($indexConfig, $index, true);
-    }
-
-    public function getSetRootNameData()
-    {
-        return [
-            [['name' => 'name', 'config' => [], 'mapping' => [], 'model' => null], 'name_'],
-            [['elasticsearch_name' => 'notname', 'name' => 'name', 'config' => [], 'mapping' => [], 'model' => null], 'notname_'],
-        ];
     }
 
     private function getIndexMock(string $name): Index&MockObject

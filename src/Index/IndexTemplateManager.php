@@ -14,18 +14,14 @@ namespace FOS\ElasticaBundle\Index;
 use Elastica\IndexTemplate;
 
 /**
- * Class Index template manager.
- *
  * @author Dmitry Balabka <dmitry.balabka@intexsys.lv>
  */
 class IndexTemplateManager
 {
     /**
-     * Templates.
-     *
      * @var array<string, IndexTemplate>
      */
-    private $templates;
+    private array $templates;
 
     /**
      * @param array<string, IndexTemplate> $templates
@@ -40,11 +36,9 @@ class IndexTemplateManager
      *
      * @param string $name Index template to return
      *
-     * @return IndexTemplate
-     *
      * @throws \InvalidArgumentException if no index template exists for the given name
      */
-    public function getIndexTemplate($name)
+    public function getIndexTemplate(string $name): IndexTemplate
     {
         if (!isset($this->templates[$name])) {
             throw new \InvalidArgumentException(\sprintf('The index template "%s" does not exist', $name));

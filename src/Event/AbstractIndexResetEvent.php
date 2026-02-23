@@ -18,15 +18,9 @@ namespace FOS\ElasticaBundle\Event;
  */
 abstract class AbstractIndexResetEvent extends AbstractIndexEvent
 {
-    /**
-     * @var bool
-     */
-    protected $force;
+    protected bool $force;
 
-    /**
-     * @var bool
-     */
-    private $populating;
+    private bool $populating;
 
     public function __construct(string $index, bool $populating, bool $force)
     {

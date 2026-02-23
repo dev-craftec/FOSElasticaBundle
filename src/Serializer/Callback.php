@@ -18,22 +18,13 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class Callback
 {
-    /**
-     * @var ?object
-     */
-    protected $serializer;
+    protected ?object $serializer = null;
     /**
      * @var array<mixed>
      */
-    protected $groups = [];
-    /**
-     * @var string
-     */
-    protected $version;
-    /**
-     * @var bool
-     */
-    protected $serializeNull = false;
+    protected array $groups = [];
+    protected ?string $version = null;
+    protected bool $serializeNull = false;
 
     public function setSerializer(object $serializer): self
     {

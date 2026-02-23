@@ -18,19 +18,16 @@ use Elastica\Result;
  */
 class HybridResult
 {
-    /**
-     * @var Result
-     */
-    protected $result;
+    protected Result $result;
     /**
      * @var T|null
      */
-    protected $transformed;
+    protected ?object $transformed = null;
 
     /**
      * @param T|null $transformed
      */
-    public function __construct(Result $result, $transformed = null)
+    public function __construct(Result $result, ?object $transformed = null)
     {
         $this->result = $result;
         $this->transformed = $transformed;
@@ -39,7 +36,7 @@ class HybridResult
     /**
      * @return T|null
      */
-    public function getTransformed()
+    public function getTransformed(): ?object
     {
         return $this->transformed;
     }

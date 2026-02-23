@@ -13,17 +13,17 @@ namespace FOS\ElasticaBundle\Tests\Functional;
 
 class TypeObj
 {
-    public $id = 5;
-    public $coll;
-    public $field1;
-    public $field2;
+    public int $id = 5;
+    public mixed $coll = null;
+    public mixed $field1 = null;
+    public mixed $field2 = null;
 
-    public function isIndexable()
+    public function isIndexable(): bool
     {
         return true;
     }
 
-    public function isntIndexable()
+    public function isntIndexable(): bool
     {
         return false;
     }
