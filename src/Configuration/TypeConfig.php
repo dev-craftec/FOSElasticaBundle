@@ -20,27 +20,14 @@ namespace FOS\ElasticaBundle\Configuration;
 class TypeConfig
 {
     /**
-     * @var TElasticConfig
-     */
-    private array $config;
-
-    /**
-     * @var TMapping
-     */
-    private array $mapping;
-
-    private string $name;
-
-    /**
      * @param TMapping       $mapping
      * @param TElasticConfig $config
      */
-    public function __construct(string $name, array $mapping, array $config = [])
-    {
-        $this->config = $config;
-        $this->mapping = $mapping;
-        $this->name = $name;
-    }
+    public function __construct(
+        private readonly string $name,
+        private readonly array $mapping,
+        private readonly array $config = [],
+    ) {}
 
     public function getDateDetection(): ?bool
     {

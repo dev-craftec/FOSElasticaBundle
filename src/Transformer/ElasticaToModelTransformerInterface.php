@@ -34,7 +34,7 @@ interface ElasticaToModelTransformerInterface
     /**
      * @param Result[] $elasticaObjects
      *
-     * @return list<HybridResult>
+     * @return list<HybridResult<object>>
      */
     public function hybridTransform(array $elasticaObjects): array;
 

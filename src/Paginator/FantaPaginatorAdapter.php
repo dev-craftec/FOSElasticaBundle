@@ -21,17 +21,11 @@ use Pagerfanta\Adapter\AdapterInterface;
 class FantaPaginatorAdapter implements AdapterInterface
 {
     /**
-     * @var PaginatorAdapterInterface<T>
-     */
-    private PaginatorAdapterInterface $adapter;
-
-    /**
      * @param PaginatorAdapterInterface<T> $adapter
      */
-    public function __construct(PaginatorAdapterInterface $adapter)
-    {
-        $this->adapter = $adapter;
-    }
+    public function __construct(
+        private readonly PaginatorAdapterInterface $adapter,
+    ) {}
 
     /**
      * Returns the number of results.

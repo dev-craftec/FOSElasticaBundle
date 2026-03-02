@@ -21,19 +21,11 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class TemplateResetter implements ResetterInterface
 {
-    private ManagerInterface $configManager;
-    private MappingBuilder $mappingBuilder;
-    private IndexTemplateManager $indexTemplateManager;
-
     public function __construct(
-        ManagerInterface $configManager,
-        MappingBuilder $mappingBuilder,
-        IndexTemplateManager $indexTemplateManager,
-    ) {
-        $this->configManager = $configManager;
-        $this->mappingBuilder = $mappingBuilder;
-        $this->indexTemplateManager = $indexTemplateManager;
-    }
+        private readonly ManagerInterface $configManager,
+        private readonly MappingBuilder $mappingBuilder,
+        private readonly IndexTemplateManager $indexTemplateManager,
+    ) {}
 
     public function resetAllIndexes(bool $deleteIndexes = false): void
     {

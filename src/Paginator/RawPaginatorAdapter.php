@@ -21,21 +21,6 @@ use Elastica\SearchableInterface;
 class RawPaginatorAdapter implements PaginatorAdapterInterface
 {
     /**
-     * @var SearchableInterface the object to search in
-     */
-    private SearchableInterface $searchable;
-
-    /**
-     * @var Query the query to search
-     */
-    private Query $query;
-
-    /**
-     * @var array<string, mixed> search options
-     */
-    private array $options;
-
-    /**
      * @var ?int the number of hits
      */
     private ?int $totalHits = null;
@@ -59,12 +44,11 @@ class RawPaginatorAdapter implements PaginatorAdapterInterface
      * @param Query                $query      the query to search
      * @param array<string, mixed> $options
      */
-    public function __construct(SearchableInterface $searchable, Query $query, array $options = [])
-    {
-        $this->searchable = $searchable;
-        $this->query = $query;
-        $this->options = $options;
-    }
+    public function __construct(
+        private readonly SearchableInterface $searchable,
+        private readonly Query $query,
+        private readonly array $options = [],
+    ) {}
 
     public function getResults(int $offset, int $itemCountPerPage): PartialResultsInterface
     {
@@ -82,7 +66,7 @@ class RawPaginatorAdapter implements PaginatorAdapterInterface
      */
     public function getTotalHits(bool $genuineTotal = false): int
     {
-        if (!isset($this->totalHits)) {
+        if (null === $this->totalHits) {
             $this->totalHits = $this->searchable->count($this->query);
         }
 
@@ -93,7 +77,7 @@ class RawPaginatorAdapter implements PaginatorAdapterInterface
 
     public function getAggregations(): array
     {
-        if (!isset($this->aggregations)) {
+        if (null === $this->aggregations) {
             $this->aggregations = $this->searchable->search($this->query)->getAggregations();
         }
 
@@ -102,7 +86,7 @@ class RawPaginatorAdapter implements PaginatorAdapterInterface
 
     public function getSuggests(): array
     {
-        if (!isset($this->suggests)) {
+        if (null === $this->suggests) {
             $this->suggests = $this->searchable->search($this->query)->getSuggests();
         }
 
@@ -111,7 +95,7 @@ class RawPaginatorAdapter implements PaginatorAdapterInterface
 
     public function getMaxScore(): float
     {
-        if (!isset($this->maxScore)) {
+        if (null === $this->maxScore) {
             $this->maxScore = $this->searchable->search($this->query)->getMaxScore();
         }
 

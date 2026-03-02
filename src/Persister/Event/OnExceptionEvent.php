@@ -17,22 +17,6 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class OnExceptionEvent extends Event implements PersistEvent
 {
-    private PagerInterface $pager;
-
-    private ObjectPersisterInterface $objectPersister;
-
-    private \Exception $exception;
-
-    /**
-     * @var array<string, mixed>
-     */
-    private array $options;
-
-    /**
-     * @var list<object>
-     */
-    private array $objects;
-
     private bool $ignored = false;
 
     /**
@@ -40,18 +24,12 @@ final class OnExceptionEvent extends Event implements PersistEvent
      * @param array<string, mixed> $options
      */
     public function __construct(
-        PagerInterface $pager,
-        ObjectPersisterInterface $objectPersister,
-        \Exception $exception,
-        array $objects,
-        array $options,
-    ) {
-        $this->pager = $pager;
-        $this->objectPersister = $objectPersister;
-        $this->exception = $exception;
-        $this->options = $options;
-        $this->objects = $objects;
-    }
+        private readonly PagerInterface $pager,
+        private readonly ObjectPersisterInterface $objectPersister,
+        private \Exception $exception,
+        private readonly array $objects,
+        private readonly array $options,
+    ) {}
 
     public function getPager(): PagerInterface
     {

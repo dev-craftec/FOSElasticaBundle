@@ -28,6 +28,7 @@ return (new PhpCsFixer\Config())
         ],
         'no_useless_else' => true,
         'no_useless_return' => true,
+        'single_line_empty_body' => true,
         'strict_comparison' => true,
         'strict_param' => true,
     ])

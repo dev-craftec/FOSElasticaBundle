@@ -15,7 +15,5 @@ use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 
 class DoctrineMongoDBCustomRepositoryMock extends DocumentRepository
 {
-    public function createCustomQueryBuilder(): void
-    {
-    }
+    public function createCustomQueryBuilder(): mixed {}
 }

@@ -21,15 +21,12 @@ class Configuration implements ConfigurationInterface
 {
     private const SUPPORTED_DRIVERS = ['orm', 'mongodb', 'phpcr'];
 
-    /**
-     * If the kernel is running in debug mode.
-     */
-    private bool $debug;
-
-    public function __construct(bool $debug)
-    {
-        $this->debug = $debug;
-    }
+    public function __construct(
+        /**
+         * If the kernel is running in debug mode.
+         */
+        private readonly bool $debug,
+    ) {}
 
     /**
      * Generates the configuration tree.
@@ -96,7 +93,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->validate()
-                    ->ifTrue(static fn ($v) => 1 !== \count($v))
+                    ->ifTrue(static fn ($v): bool => 1 !== \count($v))
                     ->thenInvalid('Dynamic template should consist of a single named object: %s.')
                 ->end()
             ->end()
@@ -186,7 +183,7 @@ class Configuration implements ConfigurationInterface
 
         $node
             ->validate()
-                ->ifTrue(static fn ($v) => isset($v['driver']) && 'orm' !== $v['driver'] && !empty($v['elastica_to_model_transformer']['hints']))
+                ->ifTrue(static fn ($v): bool => isset($v['driver']) && 'orm' !== $v['driver'] && !empty($v['elastica_to_model_transformer']['hints']))
                     ->thenInvalid('Hints are only supported by the "orm" driver')
             ->end()
             ->children()
@@ -322,8 +319,8 @@ class Configuration implements ConfigurationInterface
                                 ->requiresAtLeastOneElement()
                                 ->prototype('scalar')
                                     ->validate()
-                                    ->ifTrue(static fn ($url) => $url && !\str_ends_with($url, '/'))
-                                    ->then(static fn ($url) => $url.'/')
+                                    ->ifTrue(static fn ($url): bool => $url && !\str_ends_with($url, '/'))
+                                    ->then(static fn ($url): string => $url.'/')
                                     ->end()
                                 ->end()
                             ->end()
@@ -335,8 +332,8 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('api_key')->end()
                             ->arrayNode('http_error_codes')
                                 ->beforeNormalization()
-                                    ->ifTrue(static fn ($v) => !\is_array($v))
-                                    ->then(static fn ($v) => [$v])
+                                    ->ifTrue(static fn ($v): bool => !\is_array($v))
+                                    ->then(static fn ($v): array => [$v])
                                 ->end()
                                 ->requiresAtLeastOneElement()
                                 ->defaultValue([400, 403])
@@ -453,8 +450,8 @@ class Configuration implements ConfigurationInterface
                         // Support multiple dynamic_template formats to match the old bundle style
                         // and the way ElasticSearch expects them
                         ->beforeNormalization()
-                        ->ifTrue(static fn ($v) => isset($v['dynamic_templates']))
-                        ->then(static function ($v) {
+                        ->ifTrue(static fn ($v): bool => isset($v['dynamic_templates']))
+                        ->then(static function (array $v) {
                             $dt = [];
                             foreach ($v['dynamic_templates'] as $key => $type) {
                                 if (\is_int($key)) {

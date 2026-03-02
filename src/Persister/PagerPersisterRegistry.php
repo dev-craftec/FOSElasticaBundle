@@ -15,12 +15,9 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
 
 final class PagerPersisterRegistry
 {
-    private ServiceLocator $persisters;
-
-    public function __construct(ServiceLocator $persisters)
-    {
-        $this->persisters = $persisters;
-    }
+    public function __construct(
+        private readonly ServiceLocator $persisters,
+    ) {}
 
     /**
      * @throws \InvalidArgumentException if no pager persister was registered for the given name

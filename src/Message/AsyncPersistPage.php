@@ -18,21 +18,13 @@ use FOS\ElasticaBundle\Event\AbstractIndexPopulateEvent;
  */
 class AsyncPersistPage
 {
-    private int $page;
-
-    /**
-     * @var TOptions
-     */
-    private array $options;
-
     /**
      * @param TOptions $options
      */
-    public function __construct(int $page, array $options)
-    {
-        $this->page = $page;
-        $this->options = $options;
-    }
+    public function __construct(
+        private readonly int $page,
+        private readonly array $options,
+    ) {}
 
     public function getPage(): int
     {

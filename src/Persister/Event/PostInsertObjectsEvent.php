@@ -17,34 +17,17 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class PostInsertObjectsEvent extends Event implements PersistEvent
 {
-    private PagerInterface $pager;
-
-    private ObjectPersisterInterface $objectPersister;
-
-    /**
-     * @var list<object>
-     */
-    private array $objects;
-
-    /**
-     * @var array<string, mixed>
-     */
-    private array $options;
-
-    private int $filteredObjectCount;
-
     /**
      * @param list<object>         $objects
      * @param array<string, mixed> $options
      */
-    public function __construct(PagerInterface $pager, ObjectPersisterInterface $objectPersister, array $objects, array $options, int $filteredObjectCount = 0)
-    {
-        $this->pager = $pager;
-        $this->objectPersister = $objectPersister;
-        $this->objects = $objects;
-        $this->options = $options;
-        $this->filteredObjectCount = $filteredObjectCount;
-    }
+    public function __construct(
+        private readonly PagerInterface $pager,
+        private readonly ObjectPersisterInterface $objectPersister,
+        private readonly array $objects,
+        private readonly array $options,
+        private readonly int $filteredObjectCount = 0,
+    ) {}
 
     public function getPager(): PagerInterface
     {

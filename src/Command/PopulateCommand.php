@@ -39,27 +39,16 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class PopulateCommand extends Command
 {
-    private EventDispatcherInterface $dispatcher;
-    private IndexManager $indexManager;
-    private PagerProviderRegistry $pagerProviderRegistry;
-    private PagerPersisterRegistry $pagerPersisterRegistry;
     private PagerPersisterInterface $pagerPersister;
-    private Resetter $resetter;
 
     public function __construct(
-        EventDispatcherInterface $dispatcher,
-        IndexManager $indexManager,
-        PagerProviderRegistry $pagerProviderRegistry,
-        PagerPersisterRegistry $pagerPersisterRegistry,
-        Resetter $resetter,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly IndexManager $indexManager,
+        private readonly PagerProviderRegistry $pagerProviderRegistry,
+        private readonly PagerPersisterRegistry $pagerPersisterRegistry,
+        private readonly Resetter $resetter,
     ) {
         parent::__construct();
-
-        $this->dispatcher = $dispatcher;
-        $this->indexManager = $indexManager;
-        $this->pagerProviderRegistry = $pagerProviderRegistry;
-        $this->pagerPersisterRegistry = $pagerPersisterRegistry;
-        $this->resetter = $resetter;
     }
 
     protected function configure(): void
@@ -74,7 +63,7 @@ class PopulateCommand extends Command
             ->addOption('no-overwrite-format', null, InputOption::VALUE_NONE, 'Prevent this command from overwriting ProgressBar\'s formats')
 
             ->addOption('first-page', null, InputOption::VALUE_REQUIRED, 'The pager\'s page to start population from. Including the given page.', 1)
-            ->addOption('last-page', null, InputOption::VALUE_REQUIRED, 'The pager\'s page to end population on. Including the given page.', null)
+            ->addOption('last-page', null, InputOption::VALUE_REQUIRED, 'The pager\'s page to end population on. Including the given page.')
             ->addOption('max-per-page', null, InputOption::VALUE_REQUIRED, 'The pager\'s page size', 100)
             ->addOption('pager-persister', null, InputOption::VALUE_REQUIRED, 'The pager persister to be used to populate the index', InPlacePagerPersister::NAME)
 

@@ -24,17 +24,10 @@ use FOS\ElasticaBundle\Transformer\HighlightableModelInterface;
  */
 abstract class AbstractElasticaToModelTransformer extends BaseTransformer
 {
-    protected ManagerRegistry $registry;
-
-    /**
-     * Class of the model to map to the elastica documents.
-     *
-     * @var class-string
-     */
-    protected string $objectClass;
-
     /**
      * Optional parameters.
+     *
+     * @var array<string, mixed>
      */
     protected array $options = [
         'hints' => [],
@@ -44,13 +37,15 @@ abstract class AbstractElasticaToModelTransformer extends BaseTransformer
         'query_builder_method' => 'createQueryBuilder',
     ];
 
-    /**
-     * Instantiates a new Mapper.
-     */
-    public function __construct(ManagerRegistry $registry, string $objectClass, array $options = [])
+    public function __construct(
+        protected ManagerRegistry $registry,
+        /**
+         * Class of the model to map to the elastica documents.
+         *
+         * @var class-string
+         */
+        protected string $objectClass, array $options = [])
     {
-        $this->registry = $registry;
-        $this->objectClass = $objectClass;
         $this->options = \array_merge($this->options, $options);
     }
 
@@ -84,7 +79,7 @@ abstract class AbstractElasticaToModelTransformer extends BaseTransformer
         $propertyAccessor = $this->propertyAccessor;
         $identifier = $this->options['identifier'];
         if (!$this->options['ignore_missing'] && $objectsCnt < $elasticaObjectsCnt) {
-            $missingIds = \array_diff($ids, \array_map(static fn ($object) => $propertyAccessor->getValue($object, $identifier), $objects));
+            $missingIds = \array_diff($ids, \array_map(static fn ($object): mixed => $propertyAccessor->getValue($object, $identifier), $objects));
 
             throw new \RuntimeException(\sprintf('Cannot find corresponding Doctrine objects (%d) for all Elastica results (%d). Missing IDs: %s. IDs: %s', $objectsCnt, $elasticaObjectsCnt, \implode(', ', $missingIds), \implode(', ', $ids)));
         }
@@ -100,7 +95,7 @@ abstract class AbstractElasticaToModelTransformer extends BaseTransformer
         $idPos = \array_flip($ids);
         \usort(
             $objects,
-            function ($a, $b) use ($idPos, $identifier, $propertyAccessor) {
+            function (array $a, array $b) use ($idPos, $identifier, $propertyAccessor): int {
                 if ($this->options['hydrate']) {
                     return $idPos[(string) $propertyAccessor->getValue(
                         $a,
@@ -116,7 +111,7 @@ abstract class AbstractElasticaToModelTransformer extends BaseTransformer
     }
 
     /**
-     * @return list<HybridResult>
+     * @return list<HybridResult<object>>
      */
     public function hybridTransform(array $elasticaObjects): array
     {
@@ -146,10 +141,10 @@ abstract class AbstractElasticaToModelTransformer extends BaseTransformer
     }
 
     /**
-     * Fetches objects by theses identifier values.
+     * Fetches objects by these identifier values.
      *
-     * @param array $identifierValues ids values
-     * @param bool  $hydrate          whether or not to hydrate the objects, false returns arrays
+     * @param list<string> $identifierValues ids values
+     * @param bool         $hydrate          whether or not to hydrate the objects, false returns arrays
      *
      * @return array of objects or arrays
      */

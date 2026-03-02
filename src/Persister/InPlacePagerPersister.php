@@ -27,14 +27,10 @@ final class InPlacePagerPersister implements PagerPersisterInterface
 {
     public const NAME = 'in_place';
 
-    private PersisterRegistry $registry;
-    private EventDispatcherInterface $dispatcher;
-
-    public function __construct(PersisterRegistry $registry, EventDispatcherInterface $dispatcher)
-    {
-        $this->registry = $registry;
-        $this->dispatcher = $dispatcher;
-    }
+    public function __construct(
+        private readonly PersisterRegistry $registry,
+        private readonly EventDispatcherInterface $dispatcher,
+    ) {}
 
     public function insert(PagerInterface $pager, array $options = []): void
     {

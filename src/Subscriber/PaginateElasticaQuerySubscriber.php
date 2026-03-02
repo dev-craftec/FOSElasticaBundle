@@ -20,12 +20,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class PaginateElasticaQuerySubscriber implements EventSubscriberInterface
 {
-    private RequestStack $requestStack;
-
-    public function __construct(RequestStack $requestStack)
-    {
-        $this->requestStack = $requestStack;
-    }
+    public function __construct(
+        private readonly RequestStack $requestStack,
+    ) {}
 
     public function items(ItemsEvent $event): void
     {
@@ -33,7 +30,7 @@ class PaginateElasticaQuerySubscriber implements EventSubscriberInterface
             // Add sort to query
             $this->setSorting($event);
 
-            /** @var PartialResultsInterface $results */
+            /** @var PartialResultsInterface<object> $results */
             $results = $event->target->getResults($event->getOffset(), $event->getLimit());
 
             $event->count = $results->getTotalHits();
@@ -47,6 +44,9 @@ class PaginateElasticaQuerySubscriber implements EventSubscriberInterface
         }
     }
 
+    /**
+     * @return array<string, array<int, string|int>>
+     */
     public static function getSubscribedEvents(): array
     {
         return [

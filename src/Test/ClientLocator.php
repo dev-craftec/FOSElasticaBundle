@@ -13,12 +13,15 @@ declare(strict_types=1);
 
 namespace FOS\ElasticaBundle\Test;
 
+use FOS\ElasticaBundle\Elastica\Client;
+
 class ClientLocator
 {
-    private array $clients; // @phpstan-ignore property.onlyWritten (Used only in tests to forbid container to remove clients.)
-
-    public function __construct(array $clients)
-    {
-        $this->clients = $clients;
-    }
+    /**
+     * @param Client[] $clients
+     */
+    public function __construct(
+        // @phpstan-ignore property.onlyWritten (Used only in tests to forbid container to remove clients.)
+        private readonly array $clients,
+    ) {}
 }

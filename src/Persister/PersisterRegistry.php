@@ -15,12 +15,9 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
 
 class PersisterRegistry
 {
-    private ServiceLocator $persisters;
-
-    public function __construct(ServiceLocator $persisters)
-    {
-        $this->persisters = $persisters;
-    }
+    public function __construct(
+        private readonly ServiceLocator $persisters,
+    ) {}
 
     /**
      * Gets the persister for an index.

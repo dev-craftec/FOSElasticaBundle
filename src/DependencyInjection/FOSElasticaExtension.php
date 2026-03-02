@@ -349,6 +349,9 @@ class FOSElasticaExtension extends Extension
 
     /**
      * Loads the configured $index.
+     *
+     * @param array<string, mixed> $indexConfig
+     * @param array<string, mixed> $index
      */
     private function loadIndexConfig(array $index, array &$indexConfig): void
     {
@@ -381,7 +384,7 @@ class FOSElasticaExtension extends Extension
         }
     }
 
-    private function buildCallback($indexCallback, $indexName)
+    private function buildCallback($indexCallback, string $indexName)
     {
         if (\is_array($indexCallback)) {
             if (!isset($indexCallback[0])) {
@@ -412,6 +415,9 @@ class FOSElasticaExtension extends Extension
         return \str_starts_with($classOrService, '@') ? new Reference(\substr($classOrService, 1)) : $classOrService;
     }
 
+    /**
+     * @param array<string, mixed> $config
+     */
     private function loadIndexSerializerIntegration(array $config, ContainerBuilder $container, Reference $indexRef): void
     {
         if ($container->hasDefinition('fos_elastica.serializer_callback_prototype')) {
@@ -436,6 +442,8 @@ class FOSElasticaExtension extends Extension
 
     /**
      * Loads the optional provider and finder for a type.
+     *
+     * @param array<string, mixed> $config
      */
     private function loadIndexPersistenceIntegration(array $config, ContainerBuilder $container, Reference $indexRef, string $indexName): void
     {
@@ -460,6 +468,8 @@ class FOSElasticaExtension extends Extension
 
     /**
      * Creates and loads an ElasticaToModelTransformer.
+     *
+     * @param array<string, mixed> $persistenceConfig
      */
     private function loadElasticaToModelTransformer(array $persistenceConfig, ContainerBuilder $container, string $indexName): string
     {
@@ -486,6 +496,8 @@ class FOSElasticaExtension extends Extension
 
     /**
      * Creates and loads a ModelToElasticaTransformer for an index.
+     *
+     * @param array<string, mixed> $config
      */
     private function loadModelToElasticaTransformer(array $config, ContainerBuilder $container, string $indexName): string
     {
@@ -510,6 +522,8 @@ class FOSElasticaExtension extends Extension
 
     /**
      * Creates and loads an object persister for a index.
+     *
+     * @param array<string, mixed> $config
      */
     private function loadObjectPersister(array $config, Reference $indexRef, ContainerBuilder $container, string $indexName, string $transformerId): string
     {
@@ -551,6 +565,8 @@ class FOSElasticaExtension extends Extension
 
     /**
      * Loads a pager provider for a index.
+     *
+     * @param array<string, mixed> $indexConfig
      */
     private function loadIndexPagerProvider(array $indexConfig, ContainerBuilder $container, string $indexName): string
     {
@@ -588,6 +604,8 @@ class FOSElasticaExtension extends Extension
 
     /**
      * Loads doctrine listeners to handle indexing of new or updated objects.
+     *
+     * @param array<string, mixed> $indexConfig
      */
     private function loadIndexListener(array $indexConfig, ContainerBuilder $container, string $objectPersisterId, string $indexName): string
     {
@@ -648,22 +666,17 @@ class FOSElasticaExtension extends Extension
 
     /**
      * Map Elastica to Doctrine events for the current driver.
+     *
+     * @param array<string, mixed> $indexConfig
      */
-    private function getDoctrineEvents(array $indexConfig)
+    private function getDoctrineEvents(array $indexConfig): array
     {
-        switch ($indexConfig['driver']) {
-            case 'orm':
-                $eventsClass = '\Doctrine\ORM\Events';
-                break;
-            case 'phpcr':
-                $eventsClass = '\Doctrine\ODM\PHPCR\Event';
-                break;
-            case 'mongodb':
-                $eventsClass = '\Doctrine\ODM\MongoDB\Events';
-                break;
-            default:
-                throw new \InvalidArgumentException(\sprintf('Cannot determine events for driver "%s"', $indexConfig['driver']));
-        }
+        $eventsClass = match ($indexConfig['driver']) {
+            'orm' => \Doctrine\ORM\Events::class,
+            'phpcr' => \Doctrine\ODM\PHPCR\Event::class,
+            'mongodb' => \Doctrine\ODM\MongoDB\Events::class,
+            default => throw new \InvalidArgumentException(\sprintf('Cannot determine events for driver "%s"', $indexConfig['driver'])),
+        };
 
         $events = [];
         $eventMapping = [
@@ -684,6 +697,8 @@ class FOSElasticaExtension extends Extension
 
     /**
      * Loads a Type specific Finder.
+     *
+     * @param array<string, mixed> $typeConfig
      */
     private function loadTypeFinder(array $typeConfig, ContainerBuilder $container, string $elasticaToModelId, Reference $indexRef, string $indexName): string
     {
@@ -725,7 +740,7 @@ class FOSElasticaExtension extends Extension
      */
     private function loadIndexManager(ContainerBuilder $container): void
     {
-        $indexRefs = \array_map(static fn ($index) => $index['reference'], $this->indexConfigs);
+        $indexRefs = \array_map(static fn (array $index): mixed => $index['reference'], $this->indexConfigs);
 
         $managerDef = $container->getDefinition('fos_elastica.index_manager');
         $managerDef->replaceArgument(0, $indexRefs);
@@ -736,7 +751,7 @@ class FOSElasticaExtension extends Extension
      */
     private function loadIndexTemplateManager(ContainerBuilder $container): void
     {
-        $indexTemplateRefs = \array_map(static fn ($index) => $index['reference'], $this->indexTemplateConfigs);
+        $indexTemplateRefs = \array_map(static fn (array $index): mixed => $index['reference'], $this->indexTemplateConfigs);
 
         $managerDef = $container->getDefinition('fos_elastica.index_template_manager');
         $managerDef->replaceArgument(0, $indexTemplateRefs);
@@ -758,6 +773,8 @@ class FOSElasticaExtension extends Extension
 
     /**
      * Loads and configures the serializer prototype.
+     *
+     * @param array<string, mixed> $config
      */
     private function loadSerializer(array $config, ContainerBuilder $container): void
     {
@@ -812,6 +829,9 @@ class FOSElasticaExtension extends Extension
         return $this->clients[$clientName]['reference'];
     }
 
+    /**
+     * @param array<string, mixed> $config
+     */
     private function registerMessengerConfiguration(array $config, ContainerBuilder $container, XmlFileLoader $loader): void
     {
         if (!\interface_exists(MessageBusInterface::class)) {

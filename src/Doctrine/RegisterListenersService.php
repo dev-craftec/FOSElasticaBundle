@@ -22,13 +22,13 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class RegisterListenersService
 {
-    private EventDispatcherInterface $dispatcher;
+    public function __construct(
+        private readonly EventDispatcherInterface $dispatcher,
+    ) {}
 
-    public function __construct(EventDispatcherInterface $dispatcher)
-    {
-        $this->dispatcher = $dispatcher;
-    }
-
+    /**
+     * @param array<string, mixed> $options
+     */
     public function register(ObjectManager $manager, PagerInterface $pager, array $options): void
     {
         $options = \array_replace([

@@ -17,24 +17,14 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class PostPersistEvent extends Event implements PersistEvent
 {
-    private PagerInterface $pager;
-
-    private ObjectPersisterInterface $objectPersister;
-
-    /**
-     * @var array<string, mixed>
-     */
-    private array $options;
-
     /**
      * @param array<string, mixed> $options
      */
-    public function __construct(PagerInterface $pager, ObjectPersisterInterface $objectPersister, array $options)
-    {
-        $this->pager = $pager;
-        $this->objectPersister = $objectPersister;
-        $this->options = $options;
-    }
+    public function __construct(
+        private readonly PagerInterface $pager,
+        private readonly ObjectPersisterInterface $objectPersister,
+        private readonly array $options,
+    ) {}
 
     public function getPager(): PagerInterface
     {

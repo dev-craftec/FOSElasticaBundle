@@ -22,19 +22,14 @@ use FOS\ElasticaBundle\Configuration\IndexConfigInterface;
 class ContainerSource implements SourceInterface
 {
     /**
-     * The internal container representation of information.
-     *
-     * @var list<TConfig>
-     */
-    private array $configArray;
-
-    /**
      * @param list<TConfig> $configArray
      */
-    public function __construct(array $configArray)
-    {
-        $this->configArray = $configArray;
-    }
+    public function __construct(
+        /**
+         * The internal container representation of information.
+         */
+        private readonly array $configArray,
+    ) {}
 
     /**
      * Should return all configuration available from the data source.

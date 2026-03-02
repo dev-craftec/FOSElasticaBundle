@@ -23,19 +23,16 @@ use Elastica\ResultSet;
  */
 class RawPartialResults implements PartialResultsInterface
 {
-    protected ResultSet $resultSet;
-
-    public function __construct(ResultSet $resultSet)
-    {
-        $this->resultSet = $resultSet;
-    }
+    public function __construct(
+        protected ResultSet $resultSet,
+    ) {}
 
     /**
      * @return list<T>
      */
     public function toArray(): array
     {
-        return \array_map(static fn (Result $result) => $result->getSource(), $this->resultSet->getResults());
+        return \array_map(static fn (Result $result): array => $result->getSource(), $this->resultSet->getResults());
     }
 
     public function getTotalHits(): int

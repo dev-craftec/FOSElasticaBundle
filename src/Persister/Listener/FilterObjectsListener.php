@@ -17,12 +17,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class FilterObjectsListener implements EventSubscriberInterface
 {
-    private IndexableInterface $indexable;
-
-    public function __construct(IndexableInterface $indexable)
-    {
-        $this->indexable = $indexable;
-    }
+    public function __construct(
+        private readonly IndexableInterface $indexable,
+    ) {}
 
     public function filterObjects(PreInsertObjectsEvent $event): void
     {
@@ -47,6 +44,9 @@ class FilterObjectsListener implements EventSubscriberInterface
         $event->setObjects($filtered);
     }
 
+    /**
+     * @return array<string, string>
+     */
     public static function getSubscribedEvents(): array
     {
         return [

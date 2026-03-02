@@ -29,14 +29,10 @@ use Pagerfanta\Pagerfanta;
  */
 class TransformedFinder implements PaginatedFinderInterface, PaginatedRawFinderInterface, PaginatedHybridFinderInterface
 {
-    protected SearchableInterface $searchable;
-    protected ElasticaToModelTransformerInterface $transformer;
-
-    public function __construct(SearchableInterface $searchable, ElasticaToModelTransformerInterface $transformer)
-    {
-        $this->searchable = $searchable;
-        $this->transformer = $transformer;
-    }
+    public function __construct(
+        protected SearchableInterface $searchable,
+        protected ElasticaToModelTransformerInterface $transformer,
+    ) {}
 
     public function find(mixed $query, ?int $limit = null, array $options = []): array
     {
@@ -78,6 +74,9 @@ class TransformedFinder implements PaginatedFinderInterface, PaginatedRawFinderI
         return new Pagerfanta(new FantaPaginatorAdapter($paginatorAdapter));
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function createPaginatorAdapter(mixed $query, array $options = []): TransformedPaginatorAdapter
     {
         $query = Query::create($query);
@@ -85,6 +84,9 @@ class TransformedFinder implements PaginatedFinderInterface, PaginatedRawFinderI
         return new TransformedPaginatorAdapter($this->searchable, $query, $options, $this->transformer);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function createHybridPaginatorAdapter(mixed $query, array $options = []): HybridPaginatorAdapter
     {
         $query = Query::create($query);
@@ -92,6 +94,9 @@ class TransformedFinder implements PaginatedFinderInterface, PaginatedRawFinderI
         return new HybridPaginatorAdapter($this->searchable, $query, $options, $this->transformer);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function createRawPaginatorAdapter(mixed $query, array $options = []): RawPaginatorAdapter
     {
         $query = Query::create($query);
@@ -103,7 +108,7 @@ class TransformedFinder implements PaginatedFinderInterface, PaginatedRawFinderI
      * @param TQuery   $query
      * @param TOptions $options
      *
-     * @return Result[]
+     * @return list<Result>
      */
     protected function search(mixed $query, ?int $limit = null, array $options = []): array
     {

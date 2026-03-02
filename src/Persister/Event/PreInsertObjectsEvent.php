@@ -17,33 +17,18 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class PreInsertObjectsEvent extends Event implements PersistEvent
 {
-    private PagerInterface $pager;
-
-    private ObjectPersisterInterface $objectPersister;
-
-    /**
-     * @var list<object>
-     */
-    private array $objects;
-
-    /**
-     * @var array<string, mixed>
-     */
-    private array $options;
-
     private int $filteredObjectCount = 0;
 
     /**
      * @param list<object>         $objects
      * @param array<string, mixed> $options
      */
-    public function __construct(PagerInterface $pager, ObjectPersisterInterface $objectPersister, array $objects, array $options)
-    {
-        $this->pager = $pager;
-        $this->objectPersister = $objectPersister;
-        $this->objects = $objects;
-        $this->options = $options;
-    }
+    public function __construct(
+        private PagerInterface $pager,
+        private ObjectPersisterInterface $objectPersister,
+        private array $objects,
+        private array $options,
+    ) {}
 
     public function getPager(): PagerInterface
     {

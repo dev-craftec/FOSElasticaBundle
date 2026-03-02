@@ -54,7 +54,5 @@ class CallbackTest extends TestCase
 
 class FakeSerializer
 {
-    public function serialize(): void
-    {
-    }
+    public function serialize(): void {}
 }

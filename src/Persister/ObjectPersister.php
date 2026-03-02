@@ -31,35 +31,20 @@ use Psr\Log\LoggerInterface;
  */
 class ObjectPersister implements ObjectPersisterInterface
 {
-    protected Index $index;
-    protected ModelToElasticaTransformerInterface $transformer;
-    /**
-     * @var class-string
-     */
-    protected string $objectClass;
-    /**
-     * @var TFields
-     */
-    protected array $fields;
-    protected ?LoggerInterface $logger;
-    /**
-     * @var TOptions
-     */
-    private array $options;
+    protected ?LoggerInterface $logger = null;
 
     /**
      * @param class-string $objectClass
      * @param TFields      $fields
      * @param TOptions     $options
      */
-    public function __construct(Index $index, ModelToElasticaTransformerInterface $transformer, string $objectClass, array $fields, array $options = [])
-    {
-        $this->index = $index;
-        $this->transformer = $transformer;
-        $this->objectClass = $objectClass;
-        $this->fields = $fields;
-        $this->options = $options;
-    }
+    public function __construct(
+        protected Index $index,
+        protected ModelToElasticaTransformerInterface $transformer,
+        protected string $objectClass,
+        protected array $fields,
+        private readonly array $options = [],
+    ) {}
 
     public function handlesObject(object $object): bool
     {
@@ -88,9 +73,12 @@ class ObjectPersister implements ObjectPersisterInterface
 
     public function deleteById(string $id, string|bool $routing = false): void
     {
-        $this->deleteManyByIdentifiers([(string) $id], $routing);
+        $this->deleteManyByIdentifiers([$id], $routing);
     }
 
+    /**
+     * @param list<object> $objects
+     */
     public function insertMany(array $objects): void
     {
         $documents = [];
@@ -104,6 +92,9 @@ class ObjectPersister implements ObjectPersisterInterface
         }
     }
 
+    /**
+     * @param list<object> $objects
+     */
     public function replaceMany(array $objects): void
     {
         $documents = [];
@@ -120,6 +111,9 @@ class ObjectPersister implements ObjectPersisterInterface
         }
     }
 
+    /**
+     * @param list<object> $objects
+     */
     public function deleteMany(array $objects): void
     {
         $documents = [];
@@ -133,6 +127,9 @@ class ObjectPersister implements ObjectPersisterInterface
         }
     }
 
+    /**
+     * @param list<string> $identifiers
+     */
     public function deleteManyByIdentifiers(array $identifiers, string|bool $routing = false): void
     {
         try {

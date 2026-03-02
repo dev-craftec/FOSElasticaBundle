@@ -22,13 +22,6 @@ use Symfony\Component\ExpressionLanguage\SyntaxError;
 class Indexable implements IndexableInterface
 {
     /**
-     * An array of raw configured callbacks for all types.
-     *
-     * @var array<string, TCallbackInput>
-     */
-    private array $callbacks = [];
-
-    /**
      * An instance of ExpressionLanguage.
      */
     private ?ExpressionLanguage $expressionLanguage = null;
@@ -43,10 +36,12 @@ class Indexable implements IndexableInterface
     /**
      * @param array<string, TCallbackInput> $callbacks
      */
-    public function __construct(array $callbacks)
-    {
-        $this->callbacks = $callbacks;
-    }
+    public function __construct(
+        /**
+         * An array of raw configured callbacks for all types.
+         */
+        private array $callbacks,
+    ) {}
 
     /**
      * Return whether the object is indexable with respect to the callback.

@@ -16,37 +16,17 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class PreElasticaRequestEvent extends Event
 {
-    private string $path;
-    private string $method;
-
-    /**
-     * @var array<string, mixed>|string
-     */
-    private array|string $data;
-
-    /**
-     * @var array<string, mixed>
-     */
-    private array $query;
-    private string $contentType;
-
     /**
      * @param array<string, mixed>|string $data
      * @param array<string, mixed>        $query
      */
     public function __construct(
-        string $path,
-        string $method,
-        array|string $data,
-        array $query,
-        string $contentType = Request::DEFAULT_CONTENT_TYPE,
-    ) {
-        $this->path = $path;
-        $this->method = $method;
-        $this->data = $data;
-        $this->query = $query;
-        $this->contentType = $contentType;
-    }
+        private readonly string $path,
+        private readonly string $method,
+        private readonly array|string $data,
+        private readonly array $query,
+        private readonly string $contentType = Request::DEFAULT_CONTENT_TYPE,
+    ) {}
 
     public function getPath(): string
     {

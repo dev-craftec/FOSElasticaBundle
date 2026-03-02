@@ -28,8 +28,6 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class ModelToElasticaAutoTransformer implements ModelToElasticaTransformerInterface
 {
-    protected ?EventDispatcherInterface $dispatcher = null;
-
     /**
      * Optional parameters.
      *
@@ -50,10 +48,11 @@ class ModelToElasticaAutoTransformer implements ModelToElasticaTransformerInterf
      *
      * @param array<string, mixed> $options
      */
-    public function __construct(array $options = [], ?EventDispatcherInterface $dispatcher = null)
-    {
+    public function __construct(
+        array $options = [],
+        protected ?EventDispatcherInterface $dispatcher = null,
+    ) {
         $this->options = \array_merge($this->options, $options);
-        $this->dispatcher = $dispatcher;
     }
 
     /**

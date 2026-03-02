@@ -27,38 +27,37 @@ class Listener
 {
     /**
      * Objects scheduled for insertion.
+     *
+     * @var list<object>
      */
     public array $scheduledForInsertion = [];
 
     /**
      * Objects scheduled to be updated or removed.
+     *
+     * @var list<object>
      */
     public array $scheduledForUpdate = [];
 
     /**
      * IDs of objects scheduled for removal.
+     *
+     * @var list<string>
      */
     public array $scheduledForDeletion = [];
-    /**
-     * Object persister.
-     */
-    protected ObjectPersisterInterface $objectPersister;
 
-    /**
-     * PropertyAccessor instance.
-     */
     protected PropertyAccessorInterface $propertyAccessor;
 
     /**
      * Configuration for the listener.
+     *
+     * @var array<string, mixed>
      */
     private array $config;
 
-    private IndexableInterface $indexable;
-
     public function __construct(
-        ObjectPersisterInterface $objectPersister,
-        IndexableInterface $indexable,
+        protected ObjectPersisterInterface $objectPersister,
+        private readonly IndexableInterface $indexable,
         array $config = [],
         ?LoggerInterface $logger = null,
     ) {
@@ -66,8 +65,6 @@ class Listener
             'identifier' => 'id',
             'defer' => false,
         ], $config);
-        $this->indexable = $indexable;
-        $this->objectPersister = $objectPersister;
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
 
         if ($logger && $this->objectPersister instanceof ObjectPersister) {
@@ -77,7 +74,7 @@ class Listener
 
     /**
      * Handler for the "kernel.terminate" and "console.terminate" Symfony events.
-     * These event are subscribed to if the listener is configured to persist asynchronously.
+     * These event is subscribed to if the listener is configured to persist asynchronously.
      */
     public function onTerminate(): void
     {

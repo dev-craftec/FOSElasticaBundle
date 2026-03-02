@@ -19,17 +19,11 @@ use Pagerfanta\Pagerfanta;
 class PagerfantaPager implements PagerInterface
 {
     /**
-     * @var Pagerfanta<T>
-     */
-    private Pagerfanta $pagerfanta;
-
-    /**
      * @param Pagerfanta<T> $pagerfanta
      */
-    public function __construct(Pagerfanta $pagerfanta)
-    {
-        $this->pagerfanta = $pagerfanta;
-    }
+    public function __construct(
+        private readonly Pagerfanta $pagerfanta,
+    ) {}
 
     public function getNbResults(): int
     {

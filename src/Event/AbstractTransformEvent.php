@@ -20,24 +20,14 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 abstract class AbstractTransformEvent extends Event
 {
-    protected Document $document;
-
-    /**
-     * @var TFields
-     */
-    private array $fields;
-
-    private object $object;
-
     /**
      * @param TFields $fields
      */
-    public function __construct(Document $document, array $fields, object $object)
-    {
-        $this->document = $document;
-        $this->fields = $fields;
-        $this->object = $object;
-    }
+    public function __construct(
+        protected Document $document,
+        private readonly array $fields,
+        private readonly object $object,
+    ) {}
 
     public function getDocument(): Document
     {

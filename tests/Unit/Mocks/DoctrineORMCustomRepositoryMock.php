@@ -15,7 +15,5 @@ use Doctrine\ORM\EntityRepository;
 
 class DoctrineORMCustomRepositoryMock extends EntityRepository
 {
-    public function createCustomQueryBuilder(): void
-    {
-    }
+    public function createCustomQueryBuilder(): mixed {}
 }

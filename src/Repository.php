@@ -13,6 +13,8 @@ namespace FOS\ElasticaBundle;
 
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
+use FOS\ElasticaBundle\Paginator\PaginatorAdapterInterface;
+use Pagerfanta\Pagerfanta;
 
 /**
  * @author Richard Miller <info@limethinking.co.uk>
@@ -25,12 +27,9 @@ use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
  */
 class Repository
 {
-    protected PaginatedFinderInterface $finder;
-
-    public function __construct(PaginatedFinderInterface $finder)
-    {
-        $this->finder = $finder;
-    }
+    public function __construct(
+        protected PaginatedFinderInterface $finder,
+    ) {}
 
     /**
      * @param TQuery   $query
@@ -47,7 +46,7 @@ class Repository
      * @param TQuery   $query
      * @param TOptions $options
      *
-     * @return list<HybridResult>
+     * @return list<HybridResult<object>>
      */
     public function findHybrid($query, ?int $limit = null, array $options = []): array
     {
@@ -58,9 +57,9 @@ class Repository
      * @param TQuery   $query
      * @param TOptions $options
      *
-     * @return \Pagerfanta\Pagerfanta<object>
+     * @return Pagerfanta<object>
      */
-    public function findPaginated($query, array $options = []): \Pagerfanta\Pagerfanta
+    public function findPaginated($query, array $options = []): Pagerfanta
     {
         return $this->finder->findPaginated($query, $options);
     }
@@ -68,8 +67,10 @@ class Repository
     /**
      * @param TQuery   $query
      * @param TOptions $options
+     *
+     * @return PaginatorAdapterInterface<object>
      */
-    public function createPaginatorAdapter($query, array $options = []): Paginator\PaginatorAdapterInterface
+    public function createPaginatorAdapter($query, array $options = []): PaginatorAdapterInterface
     {
         return $this->finder->createPaginatorAdapter($query, $options);
     }
@@ -77,8 +78,10 @@ class Repository
     /**
      * @param TQuery   $query
      * @param TOptions $options
+     *
+     * @return PaginatorAdapterInterface<object>
      */
-    public function createHybridPaginatorAdapter($query, array $options = []): Paginator\PaginatorAdapterInterface
+    public function createHybridPaginatorAdapter($query, array $options = []): PaginatorAdapterInterface
     {
         return $this->finder->createHybridPaginatorAdapter($query, $options);
     }

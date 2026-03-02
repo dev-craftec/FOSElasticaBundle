@@ -18,12 +18,9 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
  */
 class PagerProviderRegistry
 {
-    private ServiceLocator $providers;
-
-    public function __construct(ServiceLocator $providers)
-    {
-        $this->providers = $providers;
-    }
+    public function __construct(
+        private readonly ServiceLocator $providers,
+    ) {}
 
     /**
      * Gets all registered providers.
@@ -34,7 +31,7 @@ class PagerProviderRegistry
      */
     public function getProviders(): array
     {
-        return \array_reduce(\array_keys($this->providers->getProvidedServices()), fn ($carry, $index) => $carry + [$index => $this->providers->get($index)], []);
+        return \array_reduce(\array_keys($this->providers->getProvidedServices()), fn ($carry, string $index): array => $carry + [$index => $this->providers->get($index)], []);
     }
 
     /**
