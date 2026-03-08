@@ -21,7 +21,7 @@ use Symfony\Component\HttpKernel\Kernel;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class AppKernel extends Kernel
+final class AppKernel extends Kernel
 {
     private readonly string $testCase;
     private readonly string $rootConfig;

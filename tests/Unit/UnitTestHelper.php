@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  */
-class UnitTestHelper extends TestCase
+abstract class UnitTestHelper extends TestCase
 {
     /**
      * Gets a protected property on a given object via reflection.
