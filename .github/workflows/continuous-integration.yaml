@@ -97,11 +97,6 @@ jobs:
           - '7.4.*'
         dependencies:
           - 'highest'
-        include:
-          - php: '8.2'
-            dependencies: 'lowest'
-            symfony: '7.4.*'
-
       fail-fast: false
     steps:
       - name: 'Checkout'

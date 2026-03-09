@@ -17,3 +17,6 @@ parameters:
         -
             message: '#Call to new .* on a separate line has no effect#'
             path: tests
+        -
+            identifier: method.alreadyNarrowedType
+            path: tests/Unit/Persister/Event
