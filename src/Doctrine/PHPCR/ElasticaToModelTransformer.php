@@ -36,7 +36,6 @@ class ElasticaToModelTransformer extends AbstractElasticaToModelTransformer
         return $this->registry
             ->getManager()
             ->getRepository($this->objectClass)
-            // @phpstan-ignore method.notFound (The call is \Doctrine\ODM\PHPCR\DocumentRepository::findMany())
             ->findMany($identifierValues)
             ->toArray()
         ;

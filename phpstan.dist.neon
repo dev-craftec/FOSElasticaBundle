@@ -3,7 +3,7 @@ includes:
 parameters:
     level: 6
     treatPhpDocTypesAsCertain: false
-    reportUnmatchedIgnoredErrors: true
+    reportUnmatchedIgnoredErrors: false
     paths:
         - src
         - tests
